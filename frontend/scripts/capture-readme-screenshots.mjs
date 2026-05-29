@@ -30,44 +30,11 @@ async function api(pathname, { method = "GET", token, body } = {}) {
   return data;
 }
 
-async function createManager(token, { firstName, lastName, email, jobTitle }) {
-  return api("/api/managers", {
-    method: "POST",
-    token,
-    body: {
-      first_name: firstName,
-      last_name: lastName,
-      email,
-      password: PASSWORD,
-      phone: "9876543210",
-      job_title: jobTitle,
-    },
-  });
-}
-
-async function createAgent(token, { firstName, lastName, email, managerAccountId, callMode, jobTitle }) {
-  return api("/api/agents", {
-    method: "POST",
-    token,
-    body: {
-      first_name: firstName,
-      last_name: lastName,
-      email,
-      password: PASSWORD,
-      phone: "9876543211",
-      job_title: jobTitle,
-      manager_account_id: managerAccountId,
-      call_mode: callMode,
-    },
-  });
-}
-
 async function ensureDemoUsers() {
   const adminEmail = `readme-admin-${ts}@example.com`;
-  const managerOneEmail = `readme-mgr1-${ts}@example.com`;
-  const managerTwoEmail = `readme-mgr2-${ts}@example.com`;
-  const outboundHumanEmail = `readme-outbound-human-${ts}@example.com`;
-  const outboundAiEmail = `readme-outbound-ai-${ts}@example.com`;
+  const orgEmail = `readme-org-${ts}@example.com`;
+  const managerEmail = `readme-mgr-${ts}@example.com`;
+  const agentEmail = `readme-agent-${ts}@example.com`;
 
   await api("/api/auth/register", {
     method: "POST",
@@ -84,56 +51,64 @@ async function ensureDemoUsers() {
     body: { email: adminEmail, password: PASSWORD },
   });
 
-  const managerOne = await createManager(adminLogin.access_token, {
-    firstName: "Rohan",
-    lastName: "Manager",
-    email: managerOneEmail,
-    jobTitle: "Sales Manager",
-  });
-
-  await createManager(adminLogin.access_token, {
-    firstName: "Priya",
-    lastName: "Manager",
-    email: managerTwoEmail,
-    jobTitle: "Support Manager",
-  });
-
-  await createAgent(adminLogin.access_token, {
-    firstName: "Vikram",
-    lastName: "Agent",
-    email: outboundHumanEmail,
-    managerAccountId: managerOne.item.account_id,
-    callMode: "human",
-    jobTitle: "Outbound Sales Agent",
-  });
-
-  await createAgent(adminLogin.access_token, {
-    firstName: "Neha",
-    lastName: "Agent",
-    email: outboundAiEmail,
-    managerAccountId: managerOne.item.account_id,
-    callMode: "ai",
-    jobTitle: "Outbound AI Agent",
-  });
-
-  const managerLogin = await api("/api/auth/manager/login", {
+  const org = await api("/api/organizations", {
     method: "POST",
-    body: { email: managerOneEmail, password: PASSWORD },
-  });
-
-  const outboundAgentLogin = await api("/api/auth/agent/login", {
-    method: "POST",
+    token: adminLogin.access_token,
     body: {
-      email: outboundHumanEmail,
+      name: "Acme Technologies",
+      email: orgEmail,
       password: PASSWORD,
-      call_mode: "human",
     },
   });
 
+  const manager = await api("/api/managers", {
+    method: "POST",
+    token: adminLogin.access_token,
+    body: {
+      first_name: "Rohan",
+      last_name: "Manager",
+      email: managerEmail,
+      password: PASSWORD,
+      phone: "+919876543210",
+      job_title: "Sales Manager",
+      organization_id: org.item.id,
+    },
+  });
+
+  await api("/api/agents", {
+    method: "POST",
+    token: adminLogin.access_token,
+    body: {
+      first_name: "Neha",
+      last_name: "Agent",
+      email: agentEmail,
+      password: PASSWORD,
+      phone: "+919876543211",
+      job_title: "Support Agent",
+      manager_account_id: manager.item.account_id,
+    },
+  });
+
+  const [orgLogin, managerLogin, agentLogin] = await Promise.all([
+    api("/api/auth/organization/login", {
+      method: "POST",
+      body: { email: orgEmail, password: PASSWORD },
+    }),
+    api("/api/auth/manager/login", {
+      method: "POST",
+      body: { email: managerEmail, password: PASSWORD },
+    }),
+    api("/api/auth/agent/login", {
+      method: "POST",
+      body: { email: agentEmail, password: PASSWORD },
+    }),
+  ]);
+
   return {
     adminToken: adminLogin.access_token,
+    organizationToken: orgLogin.access_token,
     managerToken: managerLogin.access_token,
-    outboundAgentToken: outboundAgentLogin.access_token,
+    agentToken: agentLogin.access_token,
   };
 }
 
@@ -152,7 +127,7 @@ async function setAuthCookie(page, token, cookieName) {
 
 async function screenshotPage(page, routePath, outputFile) {
   await page.goto(`${FRONTEND}${routePath}`, { waitUntil: "networkidle" });
-  await page.waitForTimeout(1500);
+  await page.waitForTimeout(1800);
   await page.screenshot({ path: outputFile, fullPage: false });
 }
 
@@ -164,19 +139,6 @@ async function screenshotPublic(page, routePath, outputFile) {
 async function screenshotWithToken(page, token, cookieName, routePath, outputFile) {
   await setAuthCookie(page, token, cookieName);
   await screenshotPage(page, routePath, outputFile);
-}
-
-async function screenshotReportingChain(page, token, outputFile) {
-  await setAuthCookie(page, token, "agent_token");
-  await page.goto(`${FRONTEND}/agent/dashboard`, { waitUntil: "networkidle" });
-  await page.waitForTimeout(1000);
-
-  const avatar = page.locator(".app-page-wide .app-surface--hover .relative.inline-flex").first();
-  await avatar.hover();
-  const panel = page.locator(".app-role-hover-panel").first();
-  await panel.waitFor({ state: "visible", timeout: 5000 });
-  await page.waitForTimeout(400);
-  await panel.screenshot({ path: outputFile });
 }
 
 async function main() {
@@ -191,10 +153,56 @@ async function main() {
 
   const shots = [
     ["login-portal.png", () => screenshotPublic(page, "/login", path.join(OUT_DIR, "login-portal.png"))],
+    ["admin-login.png", () => screenshotPublic(page, "/admin/login", path.join(OUT_DIR, "admin-login.png"))],
+    [
+      "organization-login.png",
+      () => screenshotPublic(page, "/organization/login", path.join(OUT_DIR, "organization-login.png")),
+    ],
+    ["manager-login.png", () => screenshotPublic(page, "/manager/login", path.join(OUT_DIR, "manager-login.png"))],
     ["agent-login.png", () => screenshotPublic(page, "/agent/login", path.join(OUT_DIR, "agent-login.png"))],
     [
       "admin-dashboard.png",
-      () => screenshotWithToken(page, tokens.adminToken, "admin_token", "/admin/dashboard", path.join(OUT_DIR, "admin-dashboard.png")),
+      () =>
+        screenshotWithToken(
+          page,
+          tokens.adminToken,
+          "admin_token",
+          "/admin/dashboard",
+          path.join(OUT_DIR, "admin-dashboard.png"),
+        ),
+    ],
+    [
+      "admin-organizations.png",
+      () =>
+        screenshotWithToken(
+          page,
+          tokens.adminToken,
+          "admin_token",
+          "/admin/dashboard/organizations",
+          path.join(OUT_DIR, "admin-organizations.png"),
+        ),
+    ],
+    [
+      "admin-managers.png",
+      () =>
+        screenshotWithToken(
+          page,
+          tokens.adminToken,
+          "admin_token",
+          "/admin/dashboard/managers",
+          path.join(OUT_DIR, "admin-managers.png"),
+        ),
+    ],
+    [
+      "admin-agents.png",
+      () =>
+        screenshotWithToken(
+          page,
+          tokens.adminToken,
+          "admin_token",
+          "/admin/dashboard/agents",
+          path.join(OUT_DIR, "admin-agents.png"),
+        ),
     ],
     [
       "admin-attendance.png",
@@ -208,29 +216,14 @@ async function main() {
         ),
     ],
     [
-      "admin-managers.png",
-      () => screenshotWithToken(page, tokens.adminToken, "admin_token", "/admin/dashboard/managers", path.join(OUT_DIR, "admin-managers.png")),
-    ],
-    [
-      "admin-agents-outbound.png",
+      "organization-dashboard.png",
       () =>
         screenshotWithToken(
           page,
-          tokens.adminToken,
-          "admin_token",
-          "/admin/dashboard/agents/outbound",
-          path.join(OUT_DIR, "admin-agents-outbound.png"),
-        ),
-    ],
-    [
-      "admin-outbound-leads.png",
-      () =>
-        screenshotWithToken(
-          page,
-          tokens.adminToken,
-          "admin_token",
-          "/admin/dashboard/leads/outbound",
-          path.join(OUT_DIR, "admin-outbound-leads.png"),
+          tokens.organizationToken,
+          "organization_token",
+          "/organization/dashboard",
+          path.join(OUT_DIR, "organization-dashboard.png"),
         ),
     ],
     [
@@ -245,6 +238,17 @@ async function main() {
         ),
     ],
     [
+      "manager-agents.png",
+      () =>
+        screenshotWithToken(
+          page,
+          tokens.managerToken,
+          "manager_token",
+          "/manager/dashboard/agents",
+          path.join(OUT_DIR, "manager-agents.png"),
+        ),
+    ],
+    [
       "manager-attendance.png",
       () =>
         screenshotWithToken(
@@ -256,22 +260,11 @@ async function main() {
         ),
     ],
     [
-      "manager-agents-outbound.png",
-      () =>
-        screenshotWithToken(
-          page,
-          tokens.managerToken,
-          "manager_token",
-          "/manager/dashboard/agents/outbound",
-          path.join(OUT_DIR, "manager-agents-outbound.png"),
-        ),
-    ],
-    [
       "agent-dashboard.png",
       () =>
         screenshotWithToken(
           page,
-          tokens.outboundAgentToken,
+          tokens.agentToken,
           "agent_token",
           "/agent/dashboard",
           path.join(OUT_DIR, "agent-dashboard.png"),
@@ -282,15 +275,11 @@ async function main() {
       () =>
         screenshotWithToken(
           page,
-          tokens.outboundAgentToken,
+          tokens.agentToken,
           "agent_token",
           "/agent/dashboard/attendance",
           path.join(OUT_DIR, "agent-attendance.png"),
         ),
-    ],
-    [
-      "agent-reporting-chain.png",
-      () => screenshotReportingChain(page, tokens.outboundAgentToken, path.join(OUT_DIR, "agent-reporting-chain.png")),
     ],
   ];
 
@@ -300,7 +289,7 @@ async function main() {
   }
 
   await browser.close();
-  console.log("Screenshots saved to docs/screenshots/");
+  console.log(`Screenshots saved to ${OUT_DIR}`);
 }
 
 main().catch((error) => {

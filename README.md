@@ -87,7 +87,8 @@ ai-inbound-sales-react-python/
 │       ├── components/     # UI (team, auth, attendance, profile)
 │       └── lib/            # API clients, auth, validation
 └── docs/
-    └── samples/            # Optional sample files
+    ├── screenshots/          # README UI previews
+    └── samples/              # Optional sample files
 ```
 
 ---
@@ -102,6 +103,129 @@ ai-inbound-sales-react-python/
 | Organization login | http://localhost:3000/organization/login |
 | Manager login | http://localhost:3000/manager/login |
 | Agent login | http://localhost:3000/agent/login |
+
+---
+
+## Screenshots
+
+### Login portals
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/login-portal.png" alt="Login portal chooser" width="100%" />
+      <br /><br />
+      <strong>Portal chooser</strong>
+      <br />
+      <sub>Pick Admin, Organization, Manager, or Agent workspace</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/admin-login.png" alt="Admin login" width="100%" />
+      <br /><br />
+      <strong>Admin login</strong>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/organization-login.png" alt="Organization login" width="100%" />
+      <br /><br />
+      <strong>Organization login</strong>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/manager-login.png" alt="Manager login" width="100%" />
+      <br /><br />
+      <strong>Manager login</strong>
+    </td>
+  </tr>
+</table>
+
+<p align="center">
+  <img src="docs/screenshots/agent-login.png" alt="Agent login" width="48%" />
+  <br /><br />
+  <strong>Agent login</strong>
+</p>
+
+### Admin workspace
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/admin-dashboard.png" alt="Admin dashboard" width="100%" />
+      <br /><br />
+      <strong>Dashboard</strong>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/admin-organizations.png" alt="Admin organizations" width="100%" />
+      <br /><br />
+      <strong>Organizations</strong>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/admin-managers.png" alt="Admin managers" width="100%" />
+      <br /><br />
+      <strong>Managers</strong>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/admin-agents.png" alt="Admin agents" width="100%" />
+      <br /><br />
+      <strong>Agents</strong>
+    </td>
+  </tr>
+</table>
+
+<p align="center">
+  <img src="docs/screenshots/admin-attendance.png" alt="Admin attendance" width="72%" />
+  <br /><br />
+  <strong>Attendance & leaves</strong>
+</p>
+
+### Organization, manager & agent
+
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <img src="docs/screenshots/organization-dashboard.png" alt="Organization dashboard" width="100%" />
+      <br /><br />
+      <strong>Organization dashboard</strong>
+    </td>
+    <td align="center" width="33%">
+      <img src="docs/screenshots/manager-dashboard.png" alt="Manager dashboard" width="100%" />
+      <br /><br />
+      <strong>Manager dashboard</strong>
+    </td>
+    <td align="center" width="33%">
+      <img src="docs/screenshots/agent-dashboard.png" alt="Agent dashboard" width="100%" />
+      <br /><br />
+      <strong>Agent dashboard</strong>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="33%">
+      <img src="docs/screenshots/manager-agents.png" alt="Manager agents" width="100%" />
+      <br /><br />
+      <strong>Manager · Agents</strong>
+    </td>
+    <td align="center" width="33%">
+      <img src="docs/screenshots/manager-attendance.png" alt="Manager attendance" width="100%" />
+      <br /><br />
+      <strong>Manager · Attendance</strong>
+    </td>
+    <td align="center" width="33%">
+      <img src="docs/screenshots/agent-attendance.png" alt="Agent attendance" width="100%" />
+      <br /><br />
+      <strong>Agent · Attendance</strong>
+    </td>
+  </tr>
+</table>
+
+Regenerate screenshots (backend on `:8000`, frontend on `:3000`):
+
+```bash
+cd frontend
+npx playwright install chromium
+node scripts/capture-readme-screenshots.mjs
+```
 
 ---
 
