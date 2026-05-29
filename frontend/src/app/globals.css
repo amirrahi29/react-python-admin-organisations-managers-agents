@@ -1,0 +1,2482 @@
+@import "tailwindcss";
+
+:root {
+  --background: oklch(0.985 0.002 247);
+  --foreground: oklch(0.21 0.02 255);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.21 0.02 255);
+  --muted: oklch(0.96 0.006 247);
+  --muted-foreground: oklch(0.48 0.02 255);
+  --border: oklch(0.91 0.008 247);
+  --ring: oklch(0.62 0.19 155);
+  --primary: oklch(0.55 0.17 155);
+  --primary-foreground: oklch(0.99 0.01 155);
+  --accent: oklch(0.94 0.03 155);
+  --accent-foreground: oklch(0.28 0.08 155);
+  --destructive: oklch(0.55 0.2 25);
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 280ms;
+  --shadow-hover: 0 4px 12px oklch(0 0 0 / 0.06), 0 16px 40px oklch(0 0 0 / 0.08);
+  --shadow-hover-lg: 0 8px 24px oklch(0 0 0 / 0.1), 0 24px 48px oklch(0 0 0 / 0.12);
+  /* Admin sidebar — always dark for clear contrast */
+  --sidebar: oklch(0.2 0.025 255);
+  --sidebar-foreground: oklch(0.92 0.01 255);
+  --sidebar-muted: oklch(0.26 0.025 255);
+  --sidebar-border: oklch(0.32 0.025 255);
+}
+
+.dark {
+  --background: oklch(0.16 0.02 255);
+  --foreground: oklch(0.93 0.01 255);
+  --card: oklch(0.2 0.02 255);
+  --card-foreground: oklch(0.93 0.01 255);
+  --muted: oklch(0.24 0.02 255);
+  --muted-foreground: oklch(0.68 0.02 255);
+  --border: oklch(0.3 0.02 255);
+  --ring: oklch(0.65 0.16 155);
+  --primary: oklch(0.62 0.17 155);
+  --primary-foreground: oklch(0.15 0.03 155);
+  --accent: oklch(0.28 0.05 155);
+  --accent-foreground: oklch(0.9 0.04 155);
+  --destructive: oklch(0.55 0.2 25);
+  --sidebar: oklch(0.14 0.02 255);
+  --sidebar-foreground: oklch(0.9 0.01 255);
+  --sidebar-muted: oklch(0.22 0.02 255);
+  --sidebar-border: oklch(0.26 0.02 255);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(0.92);
+  }
+}
+
+@keyframes nav-shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes menu-pop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes card-shine {
+  0% {
+    transform: translateX(-140%) skewX(-14deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(240%) skewX(-14deg);
+    opacity: 0;
+  }
+}
+
+@keyframes card-glow-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes stat-accent-grow {
+  from {
+    transform: scaleY(0.4);
+    opacity: 0.5;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes journey-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes journey-connector-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes journey-count-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes progress-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes shimmer-bg {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes call-flow-stagger-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes call-flow-dialog-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes call-flow-tab-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes call-flow-line-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes call-flow-check-pop {
+  0% {
+    transform: scale(0.85);
+  }
+  60% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes call-flow-glow {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes call-flow-badge-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 0%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary) 18%, transparent);
+  }
+}
+
+@theme inline {
+  --animate-fade-in-up: fade-in-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-scale-in: scale-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-page-enter: page-enter 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-slide-down: slide-down 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-slide-in-left: slide-in-left 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-overlay-in: overlay-in 0.22s ease-out both;
+  --animate-menu-pop: menu-pop 0.22s var(--ease-out-soft) both;
+  --animate-float: float 5s ease-in-out infinite;
+  --animate-pulse-soft: pulse-soft 2s ease-in-out infinite;
+  --animate-progress-indeterminate: progress-indeterminate 1.2s ease-in-out infinite;
+  --animate-shimmer-bg: shimmer-bg 1.8s ease-in-out infinite;
+  --animate-call-flow-stagger-in: call-flow-stagger-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-call-flow-dialog-rise: call-flow-dialog-rise 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-call-flow-tab-in: call-flow-tab-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-call-flow-line-flow: call-flow-line-flow 2.4s linear infinite;
+  --animate-call-flow-check-pop: call-flow-check-pop 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-call-flow-glow: call-flow-glow 3s ease-in-out infinite;
+  --animate-call-flow-badge-pulse: call-flow-badge-pulse 2.4s ease-in-out infinite;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-border: var(--sidebar-border);
+  --font-sans: var(--font-geist-sans);
+  /* System mono stack — Geist_Mono is only used on the profile page and isn't
+   * worth shipping a second webfont for. Tailwind's default ``font-mono``
+   * resolves to this stack already. */
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --shadow-card: 0 1px 2px oklch(0 0 0 / 0.05), 0 8px 24px oklch(0 0 0 / 0.06);
+  --shadow-float: 0 12px 40px oklch(0 0 0 / 0.12);
+}
+
+.dark {
+  --shadow-card: 0 1px 2px oklch(0 0 0 / 0.25), 0 8px 28px oklch(0 0 0 / 0.45);
+  --shadow-float: 0 12px 48px oklch(0 0 0 / 0.55);
+  --shadow-hover: 0 4px 16px oklch(0 0 0 / 0.35), 0 20px 44px oklch(0 0 0 / 0.4);
+  --shadow-hover-lg: 0 8px 28px oklch(0 0 0 / 0.45), 0 28px 56px oklch(0 0 0 / 0.5);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    text-rendering: optimizeLegibility;
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "cv02" 1, "cv03" 1;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 22%, transparent);
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  a,
+  label[for],
+  select:not(:disabled),
+  summary {
+    @apply cursor-pointer touch-manipulation;
+  }
+
+  button:disabled,
+  [role="button"][aria-disabled="true"] {
+    @apply pointer-events-none opacity-50;
+  }
+
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+    @apply cursor-default opacity-70;
+  }
+
+  input:not(:disabled),
+  textarea:not(:disabled) {
+    @apply cursor-text;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Shared layout primitives — use with Tailwind spacing utilities */
+@layer components {
+  /* Full main column — enterprise tables & dashboards */
+  .app-page-wide {
+    @apply w-full max-w-none space-y-5 sm:space-y-6;
+  }
+  .app-surface {
+    @apply relative overflow-hidden rounded-2xl border border-border/70 bg-card ring-1 ring-black/[0.03] dark:ring-white/[0.06];
+    box-shadow: 0 1px 2px oklch(0 0 0 / 0.04);
+    transition:
+      border-color var(--duration-normal) var(--ease-smooth),
+      background-color var(--duration-fast) ease,
+      box-shadow var(--duration-normal) var(--ease-smooth),
+      transform var(--duration-normal) var(--ease-smooth);
+  }
+  .app-surface--elevated {
+    @apply shadow-[var(--shadow-card)];
+  }
+  .app-surface--hover,
+  .app-surface--interactive {
+    @apply isolate;
+  }
+  .app-surface--hover:hover,
+  .app-surface--interactive:hover {
+    border-color: color-mix(in oklab, var(--primary) 28%, var(--border));
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+  .app-surface--interactive:active {
+    transform: translateY(0);
+    transition-duration: var(--duration-fast);
+  }
+  .app-surface--inset {
+    @apply rounded-xl border border-border/60 bg-muted/30 ring-1 ring-black/[0.02] dark:bg-muted/20 dark:ring-white/[0.04];
+    transition:
+      background-color var(--duration-normal) var(--ease-smooth),
+      border-color var(--duration-normal) var(--ease-smooth),
+      box-shadow var(--duration-normal) var(--ease-smooth);
+  }
+  .app-surface--inset:hover {
+    @apply border-primary/20 bg-muted/45;
+    box-shadow: 0 2px 8px oklch(0 0 0 / 0.04);
+    transform: translateY(-1px);
+  }
+  .app-hero-banner {
+    @apply relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-card to-card p-5 sm:p-8;
+    transition:
+      border-color var(--duration-normal) var(--ease-smooth),
+      box-shadow var(--duration-normal) var(--ease-smooth);
+  }
+  .app-hero-banner:hover {
+    border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
+    box-shadow: 0 4px 20px color-mix(in oklab, var(--primary) 12%, transparent);
+  }
+  .app-hero-glow {
+    @apply pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-primary/10 blur-3xl;
+    transition: opacity var(--duration-slow) ease;
+  }
+  .app-hero-banner:hover .app-hero-glow {
+    @apply opacity-100;
+    opacity: 0.7;
+  }
+  .app-auth-card {
+    @apply relative overflow-hidden rounded-2xl border border-border/70 bg-card ring-1 ring-black/[0.03] dark:ring-white/[0.06];
+    box-shadow: 0 1px 2px oklch(0 0 0 / 0.04);
+    transition:
+      border-color var(--duration-normal) var(--ease-smooth),
+      box-shadow var(--duration-normal) var(--ease-smooth),
+      transform var(--duration-normal) var(--ease-smooth);
+  }
+  .app-auth-card:hover {
+    border-color: color-mix(in oklab, var(--primary) 22%, var(--border));
+    box-shadow: var(--shadow-hover);
+  }
+  .app-auth-aside {
+    @apply relative hidden min-h-[100dvh] flex-col justify-between overflow-hidden bg-sidebar px-8 py-10 text-sidebar-foreground lg:flex lg:w-[min(44%,520px)] xl:px-12;
+  }
+  .app-profile-hero {
+    @apply relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-card to-card p-5 sm:p-8;
+  }
+  .app-profile-hero--admin {
+    border-color: color-mix(in oklab, #7c3aed 24%, var(--border));
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklab, #7c3aed 10%, var(--card)) 0%,
+      var(--card) 55%,
+      color-mix(in oklab, var(--primary) 8%, var(--card)) 100%
+    );
+  }
+  .app-profile-hero--manager {
+    border-color: color-mix(in oklab, #2563eb 24%, var(--border));
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklab, #2563eb 10%, var(--card)) 0%,
+      var(--card) 55%,
+      color-mix(in oklab, var(--primary) 8%, var(--card)) 100%
+    );
+  }
+  .app-profile-hero--agent {
+    border-color: color-mix(in oklab, var(--primary) 28%, var(--border));
+  }
+  .app-profile-hero__glow {
+    @apply pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-primary/10 blur-3xl;
+  }
+  .app-profile-hero__status {
+    @apply inline-flex w-full items-center gap-3 rounded-2xl border border-border/70 bg-card/80 px-4 py-3 shadow-sm backdrop-blur-sm sm:w-auto;
+  }
+  .app-profile-layout {
+    @apply grid gap-6 lg:grid-cols-[minmax(280px,360px)_minmax(0,1fr)] lg:items-start lg:gap-8;
+  }
+  .app-profile-panel {
+    @apply w-full overflow-hidden rounded-2xl border border-border/70 bg-card ring-1 ring-black/[0.03] dark:ring-white/[0.06];
+    box-shadow: 0 1px 2px oklch(0 0 0 / 0.04);
+  }
+  .app-profile-panel--overview {
+    @apply flex flex-col;
+  }
+  .app-profile-panel--flush .app-profile-panel__body {
+    @apply p-0;
+  }
+  .app-profile-panel--form {
+    @apply lg:sticky lg:top-24 lg:self-start;
+  }
+  .app-profile-panel__header {
+    @apply border-b border-border/60 px-5 py-4 sm:px-6 sm:py-5;
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--primary) 5%, var(--card)) 0%,
+      var(--card) 100%
+    );
+  }
+  .app-profile-panel__title {
+    @apply text-sm font-semibold tracking-tight text-foreground;
+  }
+  .app-profile-panel__subtitle {
+    @apply mt-1 text-xs leading-relaxed text-muted-foreground;
+  }
+  .app-profile-panel__body {
+    @apply p-5 sm:p-6;
+  }
+  .app-profile-panel__section {
+    @apply space-y-5 border-t border-border/60 px-5 py-5 sm:px-6 sm:py-6;
+  }
+  .app-profile-status-pill {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/8 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary;
+  }
+  .app-profile-status-pill__dot {
+    @apply size-1.5 rounded-full bg-primary;
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 18%, transparent);
+  }
+  .app-profile-status-pill--blocked {
+    @apply border-destructive/25 bg-destructive/8 text-destructive;
+  }
+  .app-profile-status-pill--blocked .app-profile-status-pill__dot {
+    @apply bg-destructive;
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--destructive) 18%, transparent);
+  }
+  .app-profile-detail-grid {
+    @apply grid grid-cols-1 gap-3 sm:grid-cols-2;
+  }
+  .app-profile-detail {
+    @apply flex items-start gap-3 rounded-xl border border-border/60 bg-muted/15 p-3.5;
+  }
+  .app-profile-detail__icon {
+    @apply flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary;
+  }
+  .app-profile-detail__label {
+    @apply text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground;
+  }
+  .app-profile-detail__value {
+    @apply mt-1 text-sm font-medium text-foreground;
+  }
+  .app-profile-identity {
+    @apply flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left;
+  }
+  .app-profile-avatar-ring {
+    @apply rounded-full p-1 ring-2 ring-primary/25 ring-offset-2 ring-offset-card;
+  }
+  .app-profile-role-badge {
+    @apply inline-flex rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em];
+  }
+  .app-profile-role-badge--admin {
+    @apply border-violet-500/30 bg-violet-500/10 text-violet-700 dark:text-violet-300;
+  }
+  .app-profile-role-badge--manager {
+    @apply border-sky-500/30 bg-sky-500/10 text-sky-700 dark:text-sky-300;
+  }
+  .app-profile-role-badge--agent {
+    @apply border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300;
+  }
+  .app-profile-identity__meta {
+    @apply mt-3 w-full text-xs text-muted-foreground;
+  }
+  .app-profile-org-grid {
+    @apply grid grid-cols-1 gap-3 sm:grid-cols-2;
+  }
+  .app-profile-form-actions {
+    @apply flex flex-wrap items-center justify-end gap-3 border-t border-border/60 pt-5;
+  }
+  .app-profile-org-item {
+    @apply h-full rounded-xl border border-border/60 bg-muted/20 p-3.5;
+  }
+  .app-profile-org-item__label {
+    @apply text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground;
+  }
+  .app-profile-org-item__name {
+    @apply mt-2 flex items-center gap-1.5 text-sm font-semibold text-foreground;
+  }
+  .app-profile-org-item__meta {
+    @apply mt-1 truncate text-xs text-muted-foreground;
+  }
+  .app-profile-form-divider {
+    @apply my-6 h-px bg-border/70 sm:my-8;
+  }
+  .app-profile-form-section__title {
+    @apply text-sm font-semibold text-foreground;
+  }
+  .app-profile-form-section__hint {
+    @apply mt-1 text-xs leading-relaxed text-muted-foreground;
+  }
+  .app-org-chart--embedded {
+    @apply w-full max-w-none rounded-none border-0 bg-transparent shadow-none ring-0;
+  }
+  .app-org-chart--embedded .app-org-chart__header {
+    @apply rounded-none border-b border-border/60 px-5 py-4 sm:px-6;
+  }
+  .app-org-chart--embedded .app-org-chart__tree {
+    @apply px-5 pb-5 pt-4 sm:px-6 sm:pb-6;
+  }
+  .app-org-chart {
+    @apply w-[min(calc(100vw-2rem),340px)];
+  }
+  .app-org-chart__header {
+    @apply flex items-center gap-3 border-b border-border/60 px-4 py-3;
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--primary) 6%, var(--card)) 0%,
+      var(--card) 100%
+    );
+  }
+  .app-org-chart__header-icon {
+    @apply flex size-8 shrink-0 items-center justify-center rounded-lg text-primary;
+    background: color-mix(in oklab, var(--primary) 12%, transparent);
+  }
+  .app-org-chart__title {
+    @apply text-[13px] font-semibold tracking-tight text-foreground;
+  }
+  .app-org-chart__subtitle {
+    @apply text-[11px] leading-tight text-muted-foreground;
+  }
+  .app-org-chart__tree {
+    @apply relative px-3 py-3;
+  }
+  .app-org-chart__spine {
+    @apply pointer-events-none absolute w-0.5 rounded-full;
+    left: calc(0.75rem + 17px);
+    top: 2rem;
+    bottom: 2rem;
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, #7c3aed 25%, var(--border)),
+      color-mix(in oklab, #2563eb 25%, var(--border)) 50%,
+      color-mix(in oklab, var(--primary) 35%, var(--border))
+    );
+  }
+  .app-org-chart__list {
+    @apply relative z-[1] m-0 list-none space-y-0 p-0;
+  }
+  .app-org-chart__row {
+    @apply grid items-center;
+    grid-template-columns: 34px 14px minmax(0, 1fr);
+    padding: 5px 0;
+  }
+  .app-org-chart__marker {
+    @apply relative flex size-[34px] items-center justify-center rounded-full border-2 border-card text-[10px] font-bold text-white shadow-sm;
+    justify-self: center;
+  }
+  .app-org-chart__row--admin .app-org-chart__marker {
+    background: linear-gradient(145deg, #8b5cf6, #6d28d9);
+  }
+  .app-org-chart__row--manager .app-org-chart__marker {
+    background: linear-gradient(145deg, #3b82f6, #1d4ed8);
+  }
+  .app-org-chart__row--agent .app-org-chart__marker {
+    background: linear-gradient(145deg, var(--primary), oklch(0.5 0.14 165));
+  }
+  .app-org-chart__marker-icon {
+    @apply absolute -bottom-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full border border-card bg-card text-current shadow-sm;
+  }
+  .app-org-chart__row--admin .app-org-chart__marker-icon {
+    @apply text-violet-600;
+  }
+  .app-org-chart__row--manager .app-org-chart__marker-icon {
+    @apply text-blue-600;
+  }
+  .app-org-chart__row--agent .app-org-chart__marker-icon {
+    @apply text-primary;
+  }
+  .app-org-chart__initials {
+    @apply flex size-8 items-center justify-center rounded-full bg-muted text-[11px] font-semibold text-foreground;
+  }
+  .app-org-chart__row--current .app-org-chart__node {
+    @apply border-primary/35 bg-primary/5;
+  }
+  .app-org-chart__branch {
+    @apply h-0.5 rounded-full;
+    background: color-mix(in oklab, var(--border) 85%, var(--foreground) 8%);
+  }
+  .app-org-chart__row--admin .app-org-chart__branch {
+    background: color-mix(in oklab, #7c3aed 28%, var(--border));
+  }
+  .app-org-chart__row--manager .app-org-chart__branch {
+    background: color-mix(in oklab, #2563eb 28%, var(--border));
+  }
+  .app-org-chart__row--agent .app-org-chart__branch {
+    background: color-mix(in oklab, var(--primary) 32%, var(--border));
+  }
+  .app-org-chart__node {
+    @apply flex min-w-0 flex-col items-stretch rounded-[10px] border border-border/70 bg-muted/25 px-3 py-2.5;
+    transition:
+      border-color var(--duration-normal) ease,
+      background-color var(--duration-normal) ease;
+  }
+  .app-org-chart__row:hover .app-org-chart__node {
+    @apply border-border bg-muted/45;
+  }
+  .app-org-chart__node--current {
+    border-color: color-mix(in oklab, var(--primary) 40%, var(--border));
+    background: color-mix(in oklab, var(--primary) 7%, var(--card));
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 10%, transparent);
+  }
+  .app-org-chart__meta {
+    @apply flex min-w-0 flex-col items-start gap-1.5;
+  }
+  .app-org-chart__identity {
+    @apply flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1;
+  }
+  .app-org-chart__name {
+    @apply truncate text-[13px] font-semibold leading-none text-foreground;
+  }
+  .app-org-chart__role {
+    @apply shrink-0 rounded px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.1em] text-muted-foreground;
+    background: color-mix(in oklab, var(--muted) 90%, transparent);
+  }
+  .app-org-chart__you {
+    @apply shrink-0 rounded bg-primary/12 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.1em] text-primary;
+  }
+  .app-org-chart__email {
+    @apply m-0 w-full min-w-0 truncate text-left text-[11px] leading-snug text-muted-foreground;
+  }
+  .app-btn-secondary {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-border/80 bg-card px-4 py-2.5 text-sm font-medium text-foreground disabled:pointer-events-none disabled:opacity-50;
+    transition:
+      background-color var(--duration-normal) var(--ease-smooth),
+      border-color var(--duration-normal) var(--ease-smooth),
+      box-shadow var(--duration-normal) var(--ease-smooth),
+      transform var(--duration-fast) var(--ease-smooth);
+  }
+  .app-btn-secondary:hover:not(:disabled) {
+    @apply border-primary/25 bg-muted/70;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px oklch(0 0 0 / 0.06);
+  }
+  .app-btn-secondary:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  .app-btn-primary {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground disabled:pointer-events-none disabled:opacity-50;
+    transition:
+      background-color var(--duration-normal) var(--ease-smooth),
+      box-shadow var(--duration-normal) var(--ease-smooth),
+      transform var(--duration-fast) var(--ease-smooth),
+      filter var(--duration-normal) ease;
+  }
+  .app-btn-primary:hover:not(:disabled) {
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px color-mix(in oklab, var(--primary) 35%, transparent);
+  }
+  .app-btn-primary:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  .app-btn-destructive {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-2.5 text-sm font-medium text-destructive disabled:pointer-events-none disabled:opacity-50;
+    transition:
+      background-color var(--duration-normal) var(--ease-smooth),
+      border-color var(--duration-normal) var(--ease-smooth),
+      transform var(--duration-fast) var(--ease-smooth);
+  }
+  .app-btn-destructive:hover:not(:disabled) {
+    @apply bg-destructive/15 border-destructive/45;
+    transform: translateY(-1px);
+  }
+  .app-btn-destructive:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  .app-alert {
+    @apply rounded-xl border px-4 py-3 text-sm leading-relaxed;
+  }
+  .app-alert--error {
+    @apply border-destructive/30 bg-destructive/10 text-destructive;
+  }
+  .app-alert--success {
+    @apply border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300;
+  }
+  .app-skeleton {
+    @apply relative overflow-hidden rounded-lg bg-muted/45;
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in oklab, var(--foreground) 4%, transparent) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    background-repeat: no-repeat;
+    background-position: -200% 0;
+    animation: shimmer-bg 1.6s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .app-skeleton {
+      animation: none;
+      @apply animate-pulse;
+    }
+  }
+  .app-table-wrap {
+    @apply relative overflow-hidden;
+  }
+  .app-table {
+    @apply min-w-full text-left text-sm;
+  }
+  .app-table thead {
+    @apply border-b border-border/70 bg-muted/20;
+  }
+  .app-table thead th {
+    @apply px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground;
+  }
+  .app-table tbody tr {
+    @apply border-b border-border/40;
+    transition:
+      background-color var(--duration-normal) ease,
+      box-shadow var(--duration-normal) ease;
+  }
+  .app-table tbody tr:last-child {
+    @apply border-b-0;
+  }
+  .app-table tbody tr:nth-child(even) {
+    @apply bg-muted/[0.06];
+  }
+  .app-table tbody tr:hover {
+    @apply bg-primary/[0.04];
+    box-shadow: inset 3px 0 0 color-mix(in oklab, var(--primary) 70%, transparent);
+  }
+  .app-table tbody td {
+    @apply px-4 py-3.5 align-middle;
+  }
+  .app-dialog {
+    @apply fixed inset-0 z-50 m-0 h-full max-h-none w-full max-w-none border-0 bg-transparent p-4 backdrop:bg-black/45;
+  }
+  .app-dialog::backdrop {
+    @apply animate-overlay-in bg-black/50;
+  }
+  .app-dialog-panel {
+    @apply mx-auto mt-[15vh] w-full max-w-md rounded-2xl border border-border/70 bg-card p-6 shadow-[var(--shadow-float)] ring-1 ring-black/5 dark:ring-white/10;
+  }
+  .app-dialog-panel.animate-scale-in,
+  .app-dialog[open] .app-dialog-panel {
+    animation: scale-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .app-input {
+    @apply h-11 w-full rounded-xl border border-border/70 bg-background px-3 text-sm shadow-none outline-none placeholder:text-muted-foreground/80 sm:h-10;
+    transition:
+      border-color var(--duration-fast) ease,
+      background-color var(--duration-fast) ease;
+  }
+  .app-input:hover:not(:disabled) {
+    @apply border-border bg-muted/10;
+  }
+  .app-input:focus {
+    @apply border-primary/50 ring-0;
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 12%, transparent);
+  }
+  .app-input:disabled {
+    @apply cursor-default border-border/50 bg-muted/25 opacity-70;
+  }
+  .app-field-group {
+    @apply rounded-xl;
+  }
+  .app-field-group:focus-within {
+    @apply ring-0;
+  }
+  .app-icon-btn {
+    @apply inline-flex items-center justify-center rounded-lg text-muted-foreground disabled:pointer-events-none disabled:opacity-50;
+    transition:
+      background-color var(--duration-normal) var(--ease-smooth),
+      color var(--duration-normal) ease,
+      transform var(--duration-fast) var(--ease-smooth),
+      box-shadow var(--duration-normal) ease;
+  }
+  .app-icon-btn:hover:not(:disabled) {
+    @apply bg-muted text-foreground;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px oklch(0 0 0 / 0.06);
+  }
+  .app-icon-btn:active:not(:disabled) {
+    transform: translateY(0);
+    @apply opacity-90;
+  }
+  .app-link {
+    @apply font-medium text-primary underline-offset-4;
+    transition:
+      color var(--duration-normal) ease,
+      opacity var(--duration-fast) ease,
+      text-decoration-color var(--duration-normal) ease;
+  }
+  .app-link:hover {
+    @apply underline opacity-90;
+    text-decoration-color: color-mix(in oklab, var(--primary) 60%, transparent);
+  }
+  .app-sidebar {
+    background:
+      linear-gradient(180deg, color-mix(in oklab, var(--sidebar) 92%, white 8%) 0%, var(--sidebar) 38%, color-mix(in oklab, var(--sidebar) 88%, black 12%) 100%);
+    box-shadow: inset -1px 0 0 color-mix(in oklab, var(--sidebar-border) 70%, transparent);
+  }
+  .app-sidebar__header {
+    @apply flex h-[4.25rem] shrink-0 items-center border-b border-sidebar-border/80 px-3.5;
+    background: color-mix(in oklab, var(--sidebar-muted) 35%, transparent);
+  }
+  .app-sidebar__nav {
+    @apply flex flex-1 flex-col overflow-y-auto px-2.5 py-3;
+  }
+  .app-sidebar__section-label {
+    @apply mb-2 px-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-sidebar-foreground/40;
+  }
+  .app-sidebar__footnote {
+    @apply flex items-center gap-2 border-t border-sidebar-border/60 px-2.5 pt-3 text-[11px] leading-relaxed text-sidebar-foreground/45;
+  }
+  .app-sidebar__footer {
+    @apply shrink-0 border-t border-sidebar-border/80 p-2.5;
+  }
+  .app-sidebar__collapse-btn {
+    @apply flex w-full items-center justify-center gap-2 rounded-lg py-2 text-xs font-medium text-sidebar-foreground/55 transition-colors duration-150 hover:bg-sidebar-muted/70 hover:text-sidebar-foreground;
+  }
+  .app-nav-link {
+    @apply flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-sidebar-foreground/70 transition-all duration-200;
+  }
+  .app-nav-link:hover {
+    @apply bg-sidebar-muted/60 text-sidebar-foreground;
+  }
+  .app-nav-link--active {
+    @apply bg-primary/15 text-sidebar-foreground;
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--primary) 22%, transparent);
+  }
+  .app-nav-link__icon-wrap {
+    @apply flex size-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-muted/50 text-sidebar-foreground/75 transition-colors duration-200;
+  }
+  .app-nav-link__icon-wrap--active {
+    @apply bg-primary/20 text-primary;
+  }
+  .app-role-hover-panel {
+    @apply min-w-[220px] rounded-xl border border-border bg-card p-3 shadow-[var(--shadow-float)] ring-1 ring-black/5 dark:ring-white/10;
+  }
+  .app-auth-feature {
+    @apply flex items-center gap-3 rounded-xl px-3 py-2.5;
+    transition:
+      background-color var(--duration-normal) var(--ease-smooth),
+      transform var(--duration-normal) var(--ease-smooth);
+  }
+  .app-auth-feature:hover {
+    @apply bg-sidebar-muted/60;
+    transform: translateX(4px);
+  }
+  .app-section-label {
+    @apply text-[11px] font-bold uppercase tracking-widest text-muted-foreground;
+  }
+  .app-main-pattern {
+    background-color: color-mix(in oklab, var(--muted) 20%, var(--background));
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      color-mix(in oklab, var(--foreground) 4%, transparent) 1px,
+      transparent 0
+    );
+    background-size: 24px 24px;
+  }
+  .stagger-grid > * {
+    animation: fade-in-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .stagger-grid > *:nth-child(1) {
+    animation-delay: 0ms;
+  }
+  .stagger-grid > *:nth-child(2) {
+    animation-delay: 40ms;
+  }
+  .stagger-grid > *:nth-child(3) {
+    animation-delay: 80ms;
+  }
+  .stagger-grid > *:nth-child(4) {
+    animation-delay: 120ms;
+  }
+  .app-header-bar {
+    @apply sticky top-0 z-30 border-b border-border/80 bg-background/85 backdrop-blur-md;
+    transition: box-shadow var(--duration-normal) ease;
+  }
+  .app-header-bar:hover {
+    box-shadow: 0 1px 0 color-mix(in oklab, var(--border) 80%, transparent);
+  }
+  .app-user-menu {
+    @apply flex max-w-[min(100vw-5rem,16rem)] items-center gap-2 rounded-xl border border-border/70 bg-background/80 px-2 py-1.5 text-left transition-all duration-200 sm:gap-3 sm:px-3;
+  }
+  .app-user-menu:hover,
+  .app-user-menu--open {
+    @apply border-primary/30 bg-primary/5;
+  }
+  .app-dropdown {
+    @apply absolute right-0 top-full z-50 mt-1.5 min-w-[240px] animate-menu-pop overflow-hidden rounded-xl border border-border bg-card shadow-[var(--shadow-float)] ring-1 ring-black/5 dark:ring-white/10;
+  }
+  .app-brand-mark {
+    @apply flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-gradient-to-br from-primary via-emerald-500 to-teal-600 text-sm font-bold text-white;
+    box-shadow:
+      0 1px 2px oklch(0 0 0 / 0.2),
+      0 6px 16px color-mix(in oklab, var(--primary) 28%, transparent);
+    transition:
+      transform var(--duration-normal) var(--ease-smooth),
+      box-shadow var(--duration-normal) ease;
+  }
+  .group:hover .app-brand-mark {
+    transform: scale(1.03);
+    box-shadow:
+      0 2px 4px oklch(0 0 0 / 0.22),
+      0 8px 20px color-mix(in oklab, var(--primary) 34%, transparent);
+  }
+  .app-nav-icon {
+    transition: color var(--duration-normal) ease;
+  }
+  .dark .app-leads-status--new {
+    background: color-mix(in oklab, #10b981 24%, var(--card));
+    color: #6ee7b7;
+    border-color: color-mix(in oklab, #10b981 42%, transparent);
+  }
+  .dark .app-leads-status--contacted {
+    background: color-mix(in oklab, #0ea5e9 24%, var(--card));
+    color: #7dd3fc;
+    border-color: color-mix(in oklab, #0ea5e9 42%, transparent);
+  }
+  .dark .app-leads-status--interested {
+    background: color-mix(in oklab, #8b5cf6 24%, var(--card));
+    color: #c4b5fd;
+    border-color: color-mix(in oklab, #8b5cf6 42%, transparent);
+  }
+  .dark .app-leads-status--followup {
+    background: color-mix(in oklab, #f59e0b 24%, var(--card));
+    color: #fcd34d;
+    border-color: color-mix(in oklab, #f59e0b 42%, transparent);
+  }
+  .dark .app-leads-status--demo_scheduled {
+    background: color-mix(in oklab, #6366f1 24%, var(--card));
+    color: #a5b4fc;
+    border-color: color-mix(in oklab, #6366f1 42%, transparent);
+  }
+  .dark .app-leads-status--negotiation {
+    background: color-mix(in oklab, #f97316 24%, var(--card));
+    color: #fdba74;
+    border-color: color-mix(in oklab, #f97316 42%, transparent);
+  }
+  .dark .app-leads-status--converted {
+    background: color-mix(in oklab, #22c55e 24%, var(--card));
+    color: #86efac;
+    border-color: color-mix(in oklab, #22c55e 42%, transparent);
+  }
+  .dark .app-leads-status--lost {
+    background: color-mix(in oklab, #f43f5e 24%, var(--card));
+    color: #fda4af;
+    border-color: color-mix(in oklab, #f43f5e 42%, transparent);
+  }
+
+  .app-leads-tabs {
+    @apply flex gap-1 border-b border-border/70 px-3 pt-3 sm:px-4;
+  }
+  .app-leads-tabs__btn {
+    @apply relative inline-flex items-center gap-2 rounded-t-xl px-4 py-3 text-sm font-semibold transition-colors;
+  }
+  .app-leads-tabs__btn[data-active="false"] {
+    @apply text-muted-foreground hover:bg-muted/40 hover:text-foreground;
+  }
+  .app-leads-tabs__btn[data-active="true"] {
+    @apply bg-card text-primary;
+    box-shadow: inset 0 -2px 0 var(--primary);
+  }
+  .app-leads-tabs__count {
+    @apply rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold text-muted-foreground;
+  }
+  .app-leads-tabs__btn[data-active="true"] .app-leads-tabs__count {
+    @apply bg-primary/10 text-primary;
+  }
+  .app-leads-tabs--nested {
+    @apply gap-2 border-b-0 px-0 pt-0;
+  }
+  .app-leads-tabs__btn--nested {
+    @apply rounded-xl px-3 py-2 text-xs;
+  }
+  .app-leads-tabs__btn--nested[data-active="true"] {
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--primary) 24%, var(--border));
+  }
+
+  /* Dashboard charts — advanced */
+  /* Portal-rendered chart tooltip. The popover lives on ``document.body`` and
+   * is positioned with ``position: fixed`` via inline styles, so it never
+   * gets clipped by — or visually hides — adjacent panel toolbars.
+   * Placement modifiers (``--top`` / ``--bottom``) only drive a tiny entrance
+   * translate; the actual top/left come from JS measurements. */
+  @keyframes chart-portal-tip-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  /* Lightweight inline hover chip (replaces the heavy "VALUE / Point N"
+   * popover). Anchored above the hovered dot; parent KPI cards use
+   * ``overflow: visible`` so the chip is never clipped by the card edge. */
+
+  .dark .cockpit-sparkline__chip {
+    background: color-mix(in oklab, var(--card) 90%, transparent);
+    border-color: color-mix(in oklab, currentColor 55%, transparent);
+    box-shadow: 0 4px 14px oklch(0 0 0 / 0.5);
+  }
+  @keyframes chart-tooltip-bar-grow {
+    from {
+      width: 0 !important;
+      opacity: 0.5;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  button.chart-legend__pill {
+    @apply cursor-pointer;
+  }
+  @keyframes chart-ring-enter {
+    from {
+      opacity: 0;
+      transform: scale(0.88) rotate(-12deg);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+  @keyframes chart-tooltip-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  @keyframes chart-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  @keyframes chart-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes chart-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.04);
+      opacity: 0.85;
+    }
+  }
+  .stagger-grid > *:nth-child(5) {
+    animation-delay: 160ms;
+  }
+  .stagger-grid > *:nth-child(6) {
+    animation-delay: 200ms;
+  }
+  .dark .org-table-badge--active {
+    background: color-mix(in oklab, #10b981 24%, var(--card));
+    color: #6ee7b7;
+    border-color: color-mix(in oklab, #10b981 40%, transparent);
+  }
+  .dark .org-table-badge--inbound {
+    background: color-mix(in oklab, #0ea5e9 24%, var(--card));
+    color: #7dd3fc;
+    border-color: color-mix(in oklab, #0ea5e9 40%, transparent);
+  }
+  .dark .org-table-badge--outbound {
+    background: color-mix(in oklab, #6366f1 24%, var(--card));
+    color: #a5b4fc;
+    border-color: color-mix(in oklab, #6366f1 40%, transparent);
+  }
+
+  /* Agent call dashboard — advanced workspace UI */
+  @keyframes agent-live-pulse {
+    0%, 100% { opacity: 0.55; transform: scale(0.92); }
+    50% { opacity: 1; transform: scale(1.08); }
+  }
+
+  /* Compact dashboard layout — pillar-style donut + legend (matches org breakdown cards) */
+
+  @keyframes pipeline-stage-bar-grow {
+    from {
+      opacity: 0.35;
+      transform: scaleX(0.08);
+      transform-origin: left center;
+    }
+    to {
+      opacity: 1;
+      transform: scaleX(1);
+      transform-origin: left center;
+    }
+  }
+
+  .manager-agent-table tbody tr {
+    @apply transition-colors duration-200;
+  }
+  .manager-agent-table tbody tr:hover {
+    @apply bg-primary/[0.04];
+  }
+  .data-table-toolbar {
+    @apply space-y-2;
+  }
+  .data-table-toolbar__row {
+    @apply flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-end;
+  }
+  .data-table-toolbar__search {
+    @apply flex min-h-10 flex-1 items-center gap-2 rounded-xl border border-border/70 bg-background/80 px-3 ring-primary/20 transition-shadow focus-within:ring-2;
+  }
+  .data-table-toolbar__search-input {
+    @apply h-10 w-full min-w-[220px] flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground;
+  }
+  .data-table-toolbar__filter {
+    @apply flex min-w-[140px] flex-col gap-1.5;
+  }
+  .data-table-toolbar__filter-label {
+    @apply text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground;
+  }
+  .data-table-toolbar__select {
+    @apply h-10 min-w-[140px];
+  }
+  .data-table-toolbar__meta {
+    @apply text-xs text-muted-foreground;
+  }
+  .manager-agent-table__link {
+    @apply inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold text-primary transition-all duration-200;
+  }
+  .manager-agent-table__link:hover {
+    @apply bg-primary/10 text-primary;
+    transform: translateX(2px);
+  }
+
+  @keyframes agent-ring-pulse {
+    0%, 100% { opacity: 0.45; transform: scale(0.96); }
+    50% { opacity: 0.85; transform: scale(1.04); }
+  }
+  @keyframes agent-panel-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes human-dialer-backdrop-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes human-dialer-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes human-dialer-badge-dot {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+
+  @keyframes human-dialer-pulse-ring {
+    0% {
+      transform: scale(0.92);
+      opacity: 0.75;
+    }
+    100% {
+      transform: scale(1.35);
+      opacity: 0;
+    }
+  }
+
+  @keyframes human-dialer-hangup-glow {
+    0%,
+    100% {
+      opacity: 0.45;
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+    50% {
+      opacity: 0.75;
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+  }
+
+  @keyframes human-dialer-wave {
+    0%,
+    100% {
+      height: 4px;
+      opacity: 0.45;
+    }
+    50% {
+      height: 16px;
+      opacity: 1;
+    }
+  }
+
+  /* Manager agent workspace — enterprise performance view */
+
+  /* --- Call length distribution (short / medium / long buckets) ----------- */
+
+  /* --- Trend stat strip + progress footer (cockpit-style chart header) ---- */
+
+  .dark .call-outcome-badge--success {
+    background: color-mix(in oklab, #10b981 24%, var(--card));
+    color: #6ee7b7;
+    border-color: color-mix(in oklab, #10b981 40%, transparent);
+  }
+  .dark .call-outcome-badge--declined {
+    background: color-mix(in oklab, #f59e0b 24%, var(--card));
+    color: #fcd34d;
+    border-color: color-mix(in oklab, #f59e0b 40%, transparent);
+  }
+  .dark .call-outcome-badge--dropped {
+    background: color-mix(in oklab, #8b5cf6 24%, var(--card));
+    color: #c4b5fd;
+    border-color: color-mix(in oklab, #8b5cf6 40%, transparent);
+  }
+  .dark .call-outcome-badge--failed {
+    background: color-mix(in oklab, #ef4444 24%, var(--card));
+    color: #fca5a5;
+    border-color: color-mix(in oklab, #ef4444 40%, transparent);
+  }
+  .dark .call-outcome-badge--progress {
+    background: color-mix(in oklab, #0ea5e9 24%, var(--card));
+    color: #7dd3fc;
+    border-color: color-mix(in oklab, #0ea5e9 40%, transparent);
+  }
+
+  .team-row-actions {
+    @apply flex items-center justify-end gap-2;
+  }
+  .team-row-actions--card {
+    @apply justify-start sm:justify-end;
+  }
+  .team-row-actions__primary {
+    @apply inline-flex h-9 items-center gap-1 rounded-lg px-3 text-xs font-semibold text-primary transition-all duration-200;
+  }
+  .team-row-actions__primary:hover {
+    @apply bg-primary/10;
+    transform: translateX(2px);
+  }
+  .team-row-actions__menu {
+    @apply relative;
+  }
+  .team-row-actions__trigger {
+    @apply inline-flex size-9 items-center justify-center rounded-lg border border-border/70 bg-background/80 text-muted-foreground transition-all duration-200;
+  }
+  .team-row-actions__trigger:hover:not(:disabled),
+  .team-row-actions__trigger--open {
+    @apply border-primary/30 bg-primary/10 text-primary;
+  }
+  .team-row-actions__trigger:disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+  .team-row-actions__dropdown {
+    @apply absolute right-0 top-full z-50 mt-1.5 min-w-[168px] animate-menu-pop overflow-hidden rounded-xl border border-border bg-card py-1 shadow-[var(--shadow-float)] ring-1 ring-black/5 dark:ring-white/10;
+  }
+  .team-row-actions__dropdown--fixed {
+    @apply right-auto top-auto z-[120] mt-0;
+  }
+  .team-row-actions--card .team-row-actions__dropdown {
+    @apply left-0 right-auto sm:left-auto sm:right-0;
+  }
+  .team-row-actions__item {
+    @apply flex w-full items-center gap-2.5 px-3 py-2.5 text-left text-sm text-foreground transition-colors duration-200;
+  }
+  button.team-row-actions__item:hover:not(:disabled),
+  a.team-row-actions__item:hover {
+    @apply bg-muted;
+  }
+  .team-row-actions__item:disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+  .team-row-actions__item--danger {
+    @apply text-destructive;
+  }
+  .team-row-actions__item--danger:hover:not(:disabled) {
+    @apply bg-destructive/10;
+  }
+
+  .attendance-status {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em];
+  }
+  .attendance-status__dot {
+    @apply size-2 rounded-full;
+  }
+  .attendance-status--online {
+    @apply border-emerald-500/25 bg-emerald-500/10 text-emerald-700;
+  }
+  .attendance-status--online .attendance-status__dot,
+  .attendance-status__dot--online {
+    @apply bg-emerald-500;
+    box-shadow: 0 0 10px color-mix(in oklab, #10b981 55%, transparent);
+  }
+  .attendance-status--idle {
+    @apply border-amber-500/25 bg-amber-500/10 text-amber-700;
+  }
+  .attendance-status--idle .attendance-status__dot,
+  .attendance-status__dot--idle {
+    @apply bg-amber-500;
+  }
+  .attendance-status--offline {
+    @apply border-border/70 bg-muted/40 text-muted-foreground;
+  }
+  .attendance-status--offline .attendance-status__dot {
+    @apply bg-muted-foreground/50;
+  }
+  .attendance-kpi {
+    @apply flex items-center gap-3 rounded-xl border border-border/60 bg-card px-4 py-3.5;
+    /* Keep all four presence cards at the same height so the icon/ring row
+     * stays optically aligned even when the title text wraps differently
+     * (e.g. "Nobody online right now" vs "1 min total active time"). */
+    min-height: 92px;
+    transition:
+      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.28s ease,
+      box-shadow 0.28s ease,
+      background-color 0.28s ease;
+  }
+  .attendance-kpi:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--primary) 22%, var(--border));
+    box-shadow: 0 12px 32px -20px color-mix(in oklab, var(--foreground) 22%, transparent);
+  }
+  .attendance-kpi__value {
+    @apply text-lg font-semibold tabular-nums tracking-tight;
+  }
+  .attendance-kpi__value--text {
+    @apply text-sm font-medium normal-case leading-snug tracking-normal;
+  }
+  .attendance-kpi__label {
+    @apply text-xs text-muted-foreground;
+  }
+  /* The chart variant centres the ring/donut against the two-line text block
+   * so the row reads as a clean ``[icon] [label]`` pair (matching the first
+   * three cards even when the 4th uses a different chart). */
+  .attendance-kpi--chart {
+    @apply items-center gap-3;
+  }
+  .attendance-kpi__chart {
+    @apply shrink-0;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .admin-presence-strip__footer {
+    @apply flex flex-wrap items-center gap-3 border-t border-border/60 px-4 py-3 sm:px-5;
+  }
+  .admin-presence-strip__footer .cockpit-mini-chart--stack {
+    @apply min-w-0 flex-1;
+  }
+  .admin-presence-strip__footer-label {
+    @apply inline-flex shrink-0 items-center gap-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-muted-foreground;
+  }
+
+  /* Compact ring — tighten sublabel so it sits cleanly inside the ring
+     stroke instead of overflowing past the circle. */
+  .attendance-date-field,
+  .attendance-date-field__input,
+  .attendance-table__name-btn {
+    @apply text-left transition-colors hover:text-primary;
+  }
+  .attendance-table__row--active {
+    @apply bg-primary/[0.05];
+  }
+  .attendance-detail-empty {
+    @apply flex min-h-[280px] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-border/70 bg-muted/15 p-6 text-center;
+  }
+  .attendance-page-panel {
+    @apply p-4 sm:p-5;
+  }
+  .attendance-page-panel__toolbar {
+    @apply mb-5 flex flex-wrap items-center justify-between gap-3 border-b border-border/50 pb-4;
+  }
+  .attendance-page-panel__loading {
+    @apply space-y-4;
+  }
+  .attendance-page-panel__skeleton-grid {
+    @apply grid gap-3 sm:grid-cols-2 xl:grid-cols-4;
+  }
+  .attendance-page-panel__skeleton {
+    @apply h-20 animate-pulse rounded-2xl bg-muted/40;
+  }
+  .attendance-page-panel__skeleton--wide {
+    @apply h-28;
+  }
+  .attendance-page-panel__skeleton--tall {
+    @apply h-44;
+  }
+  .attendance-day-detail {
+    @apply space-y-6;
+  }
+  .attendance-work-target {
+    @apply rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-primary/5 p-4 sm:p-5;
+  }
+  .attendance-work-target--complete {
+    @apply border-emerald-500/30 from-emerald-500/10 to-emerald-500/5;
+  }
+  .attendance-work-target--active {
+    @apply border-sky-500/25 from-sky-500/10 to-sky-500/5;
+  }
+  .attendance-work-target__head {
+    @apply flex items-start gap-3;
+  }
+  .attendance-work-target__icon-wrap {
+    @apply inline-flex size-11 shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary;
+  }
+  .attendance-work-target--complete .attendance-work-target__icon-wrap {
+    @apply border-emerald-500/25 bg-emerald-500/10 text-emerald-600;
+  }
+  .attendance-work-target__eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.08em] text-primary;
+  }
+  .attendance-work-target--complete .attendance-work-target__eyebrow {
+    @apply text-emerald-600 dark:text-emerald-400;
+  }
+  .attendance-work-target__headline {
+    @apply mt-1 text-xl font-semibold tracking-tight;
+  }
+  .attendance-work-target__subline {
+    @apply mt-1 text-sm leading-relaxed text-muted-foreground;
+  }
+  .attendance-work-target__ring {
+    @apply relative flex size-16 shrink-0 items-center justify-center rounded-full text-xs font-semibold tabular-nums;
+    background: conic-gradient(
+      var(--primary) var(--progress),
+      color-mix(in oklab, var(--muted) 55%, transparent) 0
+    );
+  }
+  .attendance-work-target--complete .attendance-work-target__ring {
+    background: conic-gradient(
+      #10b981 var(--progress),
+      color-mix(in oklab, var(--muted) 55%, transparent) 0
+    );
+  }
+  .attendance-work-target__ring span {
+    @apply relative z-[1] flex size-12 items-center justify-center rounded-full bg-background text-foreground;
+  }
+  .attendance-work-target__track {
+    @apply mt-3 block h-2.5 w-full max-w-full overflow-hidden rounded-full border border-border/60;
+    background: color-mix(in oklab, var(--background) 82%, var(--muted) 18%);
+  }
+  .attendance-work-target__fill {
+    @apply block h-full min-w-0 rounded-full bg-primary transition-[width] duration-700 ease-out;
+  }
+  .attendance-work-target--complete .attendance-work-target__fill {
+    @apply bg-emerald-500;
+  }
+  .attendance-work-target__stats {
+    @apply mt-4 grid gap-3 sm:grid-cols-3;
+  }
+  .attendance-work-target__stat-value {
+    @apply text-base font-semibold tabular-nums;
+  }
+  .attendance-work-target__stat-label {
+    @apply text-[11px] uppercase tracking-[0.06em] text-muted-foreground;
+  }
+  .attendance-work-target__live {
+    @apply col-span-full inline-flex items-center gap-1.5 rounded-xl border border-sky-500/20 bg-sky-500/5 px-3 py-2 text-xs text-sky-700 dark:text-sky-300;
+  }
+  .attendance-list-layout {
+    @apply space-y-0;
+  }
+  .attendance-list-layout__table {
+    @apply border-b border-border/70;
+  }
+  .attendance-list-layout__detail {
+    @apply bg-muted/10 p-4 sm:p-6;
+  }
+  .attendance-detail-empty--inline {
+    @apply mx-4 mb-4 mt-0 min-h-[180px] rounded-2xl border border-dashed border-border/70;
+  }
+  .attendance-target-cell {
+    @apply min-w-[108px];
+  }
+  .attendance-target-cell__head {
+    @apply mb-1.5 flex items-center justify-between gap-2;
+  }
+  .attendance-target-cell__value {
+    @apply text-sm font-semibold tabular-nums;
+  }
+  .attendance-target-cell__value--complete {
+    @apply text-emerald-600 dark:text-emerald-400;
+  }
+  .attendance-target-cell__goal {
+    @apply text-[10px] uppercase tracking-[0.06em] text-muted-foreground;
+  }
+  .attendance-target-cell__track {
+    @apply h-1.5 overflow-hidden rounded-full bg-muted/60;
+  }
+  .attendance-target-cell__fill {
+    @apply block h-full rounded-full bg-primary transition-all;
+  }
+  .attendance-target-cell__fill--complete {
+    @apply bg-emerald-500;
+  }
+  .attendance-target-cell__meta {
+    @apply mt-1 text-[11px] text-muted-foreground;
+  }
+  .attendance-session-list .data-table-toolbar {
+    @apply mb-4;
+  }
+  .attendance-day-summary {
+    @apply rounded-2xl border border-border/60 bg-gradient-to-br from-muted/20 via-background to-muted/10 p-4 sm:p-5;
+  }
+  .attendance-day-summary__toolbar {
+    @apply mb-4 flex flex-wrap items-start justify-between gap-3;
+  }
+  .attendance-day-summary__eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.08em] text-primary;
+  }
+  .attendance-day-summary__caption {
+    @apply mt-1 text-sm text-muted-foreground;
+  }
+  .attendance-day-summary__status {
+    @apply shrink-0;
+  }
+  .attendance-day-summary__grid {
+    @apply grid gap-3 sm:grid-cols-2 xl:grid-cols-4;
+  }
+  .attendance-metric-card {
+    @apply flex items-center gap-3 rounded-xl border border-border/60 bg-card/80 px-3.5 py-3 shadow-sm;
+  }
+  .attendance-metric-card__icon {
+    @apply inline-flex size-9 shrink-0 items-center justify-center rounded-xl border;
+  }
+  .attendance-metric-card__icon--login {
+    @apply border-emerald-500/25 bg-emerald-500/10 text-emerald-600;
+  }
+  .attendance-metric-card__icon--logout {
+    @apply border-slate-500/25 bg-slate-500/10 text-slate-600 dark:text-slate-300;
+  }
+  .attendance-metric-card__icon--active {
+    @apply border-sky-500/25 bg-sky-500/10 text-sky-600;
+  }
+  .attendance-metric-card__icon--idle {
+    @apply border-amber-500/25 bg-amber-500/10 text-amber-600;
+  }
+  .attendance-metric-card__value {
+    @apply text-base font-semibold tabular-nums tracking-tight;
+  }
+  .attendance-metric-card__label {
+    @apply text-[11px] uppercase tracking-[0.06em] text-muted-foreground;
+  }
+  .attendance-day-summary__footer {
+    @apply mt-4 space-y-3 border-t border-border/50 pt-4;
+  }
+  .attendance-utilization {
+    @apply rounded-xl border border-border/60 bg-muted/15 p-3;
+  }
+  .attendance-utilization__head {
+    @apply mb-2 flex items-center justify-between text-xs text-muted-foreground;
+  }
+  .attendance-utilization__head strong {
+    @apply font-semibold text-foreground;
+  }
+  .attendance-utilization__track {
+    @apply flex h-2 overflow-hidden rounded-full bg-muted/50;
+  }
+  .attendance-utilization__fill {
+    @apply h-full transition-all;
+  }
+  .attendance-utilization__fill--active {
+    @apply bg-emerald-500;
+  }
+  .attendance-utilization__fill--idle {
+    @apply bg-amber-500/70;
+  }
+  .attendance-day-summary__note {
+    @apply text-xs leading-relaxed text-muted-foreground;
+  }
+  .attendance-session-list__head {
+    @apply flex w-full items-start justify-between gap-3;
+  }
+  .attendance-session-list__toggle {
+    @apply w-full rounded-xl border border-transparent p-1 text-left transition-colors hover:border-border/60 hover:bg-muted/20;
+  }
+  .attendance-session-list__chevron {
+    @apply shrink-0;
+  }
+  .attendance-session-list__title {
+    @apply text-base font-semibold;
+  }
+  .attendance-session-list__subtitle {
+    @apply text-xs text-muted-foreground;
+  }
+  .attendance-session-list__count {
+    @apply inline-flex min-w-8 items-center justify-center rounded-full border border-border/70 bg-muted/30 px-2.5 py-1 text-xs font-semibold tabular-nums;
+  }
+  .attendance-session-list__items {
+    @apply mt-4 space-y-3;
+  }
+  .attendance-session-card {
+    @apply overflow-hidden rounded-2xl border border-border/60 bg-card/70 shadow-sm transition-colors;
+  }
+  .attendance-session-card--live {
+    @apply border-emerald-500/35 bg-emerald-500/[0.08] shadow-[0_0_0_1px_rgba(16,185,129,0.12)] dark:border-emerald-400/30 dark:bg-emerald-500/[0.12];
+  }
+  .attendance-session-card__main {
+    @apply grid gap-4 p-4 lg:grid-cols-[minmax(0,1fr)_240px];
+  }
+  .attendance-session-card__title-row {
+    @apply flex items-start justify-between gap-3;
+  }
+  .attendance-session-card__eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground;
+  }
+  .attendance-session-card--live .attendance-session-card__eyebrow {
+    @apply text-emerald-600 dark:text-emerald-400;
+  }
+  .attendance-session-card__title {
+    @apply mt-1 flex flex-wrap items-center gap-2 text-lg font-semibold tabular-nums;
+  }
+  .attendance-session-card__title-sep {
+    @apply text-sm font-normal text-muted-foreground;
+  }
+  .attendance-session-card__chips {
+    @apply mt-3 flex flex-wrap gap-2;
+  }
+  .attendance-session-chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-muted/20 px-2.5 py-1 text-xs text-muted-foreground;
+  }
+  .attendance-session-chip--active {
+    @apply border-sky-500/20 bg-sky-500/10 text-sky-700 dark:text-sky-300;
+  }
+  .attendance-session-chip--idle {
+    @apply border-amber-500/20 bg-amber-500/10 text-amber-700 dark:text-amber-300;
+  }
+  .attendance-session-card__meta {
+    @apply mt-3 text-xs leading-relaxed text-muted-foreground;
+  }
+  .attendance-session-card__timeline {
+    @apply rounded-xl border border-border/50 bg-muted/10 p-3;
+  }
+  .attendance-session-card__timeline-title {
+    @apply mb-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground;
+  }
+  .attendance-timeline {
+    @apply space-y-0;
+  }
+  .attendance-timeline__item {
+    @apply grid grid-cols-[28px_minmax(0,1fr)] gap-2;
+  }
+  .attendance-timeline__rail {
+    @apply relative flex flex-col items-center;
+  }
+  .attendance-timeline__dot {
+    @apply relative z-[1] inline-flex size-6 items-center justify-center rounded-full border bg-background;
+  }
+  .attendance-timeline__dot--login {
+    @apply border-emerald-500/30 text-emerald-600;
+  }
+  .attendance-timeline__dot--logout {
+    @apply border-slate-500/30 text-slate-500;
+  }
+  .attendance-timeline__dot--idle {
+    @apply border-amber-500/30 text-amber-600;
+  }
+  .attendance-timeline__dot--active {
+    @apply border-sky-500/30 text-sky-600;
+  }
+  .attendance-timeline__line {
+    @apply mt-1 w-px flex-1 bg-border/70;
+  }
+  .attendance-timeline__content {
+    @apply pb-3;
+  }
+  .attendance-timeline__item--last .attendance-timeline__content {
+    @apply pb-0;
+  }
+  .attendance-timeline__label {
+    @apply text-sm font-medium;
+  }
+  .attendance-timeline__time {
+    @apply text-xs tabular-nums text-muted-foreground;
+  }
+  .attendance-person-detail {
+    @apply space-y-4 rounded-2xl border border-border/70 bg-card p-5;
+  }
+  .attendance-person-detail__head {
+    @apply space-y-1;
+  }
+  .attendance-person-detail__eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground;
+  }
+  .leave-preview {
+    @apply rounded-xl border border-border/70 bg-muted/20 px-4 py-3 text-sm;
+  }
+  .leave-action-btn {
+    @apply inline-flex size-8 items-center justify-center rounded-lg border border-border/70 bg-background text-muted-foreground transition-colors hover:bg-muted hover:text-foreground;
+  }
+  .leave-action-btn--danger:hover {
+    @apply border-destructive/30 bg-destructive/10 text-destructive;
+  }
+  .leave-workspace-stack {
+    @apply space-y-6;
+  }
+  .leave-workspace-section {
+    @apply space-y-4;
+  }
+  .leave-workspace-section--history {
+    @apply space-y-3;
+  }
+  .leave-workspace-section__head {
+    @apply flex flex-wrap items-center justify-between gap-3;
+  }
+  .leave-workspace-section__count {
+    @apply inline-flex rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-[11px] font-semibold text-amber-700 dark:text-amber-300;
+  }
+  .leave-workspace-section__hint {
+    @apply text-xs text-muted-foreground;
+  }
+  .leave-review-box {
+    @apply space-y-3 rounded-xl border border-border/70 bg-muted/15 p-4;
+  }
+  .leave-status {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.06em];
+  }
+  .leave-status--pending {
+    @apply border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300;
+  }
+  .leave-status--approved {
+    @apply border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300;
+  }
+  .leave-status--declined {
+    @apply border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-300;
+  }
+  .leave-status-cell {
+    @apply flex flex-col gap-2;
+  }
+  .leave-status-cell--compact {
+    @apply gap-1.5;
+  }
+  .leave-status-cell__hint {
+    @apply flex items-center gap-1.5 text-xs text-muted-foreground;
+  }
+  .leave-review-note {
+    @apply rounded-xl border px-3 py-2.5 text-sm shadow-sm;
+  }
+  .leave-review-note--compact {
+    @apply px-2.5 py-2 shadow-none;
+  }
+  .leave-review-note--compact .leave-review-note__label {
+    @apply mb-1 text-[10px];
+  }
+  .leave-review-note--compact .leave-review-note__message {
+    @apply text-xs leading-snug;
+  }
+  .leave-review-note__head {
+    @apply mb-2 flex items-start gap-2;
+  }
+  .leave-review-note__label {
+    @apply text-xs font-semibold uppercase tracking-[0.05em];
+  }
+  .leave-review-note__meta {
+    @apply mt-0.5 text-[11px] text-muted-foreground;
+  }
+  .leave-review-note__message {
+    @apply text-sm leading-relaxed text-foreground;
+  }
+  .leave-review-note__time {
+    @apply mt-2 border-t border-border/40 pt-2 text-[11px] text-muted-foreground;
+  }
+  .leave-review-note--approved {
+    @apply border-emerald-500/25 bg-emerald-500/8;
+  }
+  .leave-review-note--approved .leave-review-note__label {
+    @apply text-emerald-700 dark:text-emerald-300;
+  }
+  .leave-review-note--approved .leave-review-note__head svg {
+    @apply text-emerald-600 dark:text-emerald-400;
+  }
+  .leave-review-note--declined {
+    @apply border-rose-500/25 bg-rose-500/8;
+  }
+  .leave-review-note--declined .leave-review-note__label {
+    @apply text-rose-700 dark:text-rose-300;
+  }
+  .leave-review-note--declined .leave-review-note__head svg {
+    @apply text-rose-600 dark:text-rose-400;
+  }
+  .leave-table td {
+    @apply align-top;
+  }
+
+  /* ── Admin Command Center Cockpit ── */
+  @keyframes admin-cockpit-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Unified vertical rhythm for all role dashboards */
+
+  /* Full-width band for call duration — sits below the 3-chart row, above insights. */
+
+  @keyframes exec-cockpit-card-rise {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 18px, 0) scale(0.988);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes exec-cockpit-section-rise {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 12px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @property --donut-sweep {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  @keyframes cockpit-donut-sweep {
+    to {
+      --donut-sweep: 360deg;
+    }
+  }
+
+  @keyframes cockpit-donut-center-in {
+    from {
+      opacity: 0;
+      transform: scale(0.82);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes cockpit-segment-grow-x {
+    from {
+      opacity: 0.35;
+      transform: scaleX(0);
+    }
+    to {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes cockpit-ring-draw {
+    to {
+      stroke-dashoffset: var(--ring-target-offset);
+    }
+  }
+
+  @keyframes cockpit-sparkline-reveal {
+    from {
+      opacity: 0.15;
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes cockpit-sparkline-area-reveal {
+    from {
+      opacity: 0;
+      transform: scaleY(0.4);
+    }
+    to {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
+
+  @keyframes cockpit-flow-node-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Pipeline stage breakdown — sits under Pipeline movement in insights column */
+
+  /* Manager cockpit — section rhythm: hero → presence → analytics workspace */
+
+  .dark .admin-cockpit-table th {
+    background: linear-gradient(180deg, oklch(0.28 0.04 255) 0%, oklch(0.24 0.03 255) 100%);
+    color: oklch(0.92 0.01 247);
+    border-bottom-color: oklch(0.32 0.03 255);
+  }
+
+  .dark .admin-cockpit-table tbody tr:nth-child(even) td {
+    background: oklch(0.24 0.02 255 / 0.5);
+  }
+
+  /* ── Strategic Execution Cockpit ── */
+
+  .dark .exec-cockpit-header__eyebrow {
+    color: oklch(0.78 0.14 280);
+  }
+
+  /* ── Strategic Execution Cockpit (reference layout) ──
+   *
+   * Flexbox + ``flex: 1 1 168px`` is used here instead of CSS Grid because the
+   * ribbon hosts a variable number of cards (admin = 8, manager = 6, agent =
+   * 6). With ``grid auto-fit`` a leftover last row would leave a band of empty
+   * track-width space on the right; with flexbox the trailing cards naturally
+   * grow to fill the row so the ribbon always reads as a complete, aligned
+   * strip at every breakpoint above the mobile horizontal-scroll override. */
+
+  .dark .sec-kpi-card {
+    border-color: color-mix(in oklab, var(--foreground) 14%, transparent);
+    box-shadow: 0 1px 2px oklch(0 0 0 / 0.35), inset 0 1px 0 color-mix(in oklab, var(--foreground) 4%, transparent);
+  }
+
+  /* Legacy accent stripe — exec ribbon cards rely on real progress bars only. */
+
+  .dark .sec-kpi-card::after {
+    background: color-mix(in oklab, var(--foreground) 22%, transparent);
+  }
+
+  /* Progress bar already marks the bottom — hide the accent stripe to avoid a
+   * second blue line that reads as the bar escaping the card radius. */
+
+  .dark .sec-kpi-card--success::after { background: #10b981; }
+  .dark .sec-kpi-card--warning::after { background: #f59e0b; }
+  .dark .sec-kpi-card--danger::after { background: #ef4444; }
+  .dark .sec-kpi-card--info::after { background: #38bdf8; }
+  .dark .sec-kpi-card--neutral::after { background: #818cf8; opacity: 0.7; }
+
+  /* Exec ribbon: progress reads as the same 2px bottom accent as cards without progress. */
+
+  .dark .sec-kpi-card--exec .sec-kpi-card__progress {
+    background: color-mix(in oklab, var(--foreground) 22%, transparent);
+    box-shadow: none;
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--success .sec-kpi-card__progress {
+    background: #10b981;
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--warning .sec-kpi-card__progress {
+    background: #f59e0b;
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--danger .sec-kpi-card__progress {
+    background: #ef4444;
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--info .sec-kpi-card__progress {
+    background: #38bdf8;
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--neutral .sec-kpi-card__progress {
+    background: color-mix(in oklab, #818cf8 70%, transparent);
+  }
+
+  .dark .sec-kpi-card--exec .sec-kpi-card__progress-fill {
+    background: color-mix(in oklab, #818cf8 82%, white);
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--success .sec-kpi-card__progress-fill {
+    background: color-mix(in oklab, #10b981 82%, white);
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--warning .sec-kpi-card__progress-fill {
+    background: color-mix(in oklab, #f59e0b 82%, white);
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--danger .sec-kpi-card__progress-fill {
+    background: color-mix(in oklab, #ef4444 82%, white);
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--info .sec-kpi-card__progress-fill {
+    background: color-mix(in oklab, #38bdf8 82%, white);
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--neutral .sec-kpi-card__progress-fill {
+    background: #818cf8;
+  }
+
+  .dark .sec-kpi-card__delta--up {
+    color: #34d399;
+  }
+
+  .dark .sec-kpi-card__delta--down {
+    color: #f87171;
+  }
+
+  .dark .sec-kpi-card__icon {
+    background: color-mix(in oklab, var(--foreground) 10%, var(--card));
+    color: color-mix(in oklab, var(--foreground) 78%, var(--muted-foreground));
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--info .sec-kpi-card__icon {
+    background: color-mix(in oklab, #38bdf8 16%, transparent);
+    color: #7dd3fc;
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--success .sec-kpi-card__icon {
+    background: color-mix(in oklab, #10b981 16%, transparent);
+    color: #6ee7b7;
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--warning .sec-kpi-card__icon {
+    background: color-mix(in oklab, #f59e0b 16%, transparent);
+    color: #fcd34d;
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--danger .sec-kpi-card__icon {
+    background: color-mix(in oklab, #ef4444 16%, transparent);
+    color: #fca5a5;
+  }
+
+  .dark .sec-kpi-card--exec.sec-kpi-card--neutral .sec-kpi-card__icon {
+    background: color-mix(in oklab, #818cf8 16%, transparent);
+    color: #c7d2fe;
+  }
+
+  /* --- Inline progress bar for percentage KPIs ----------------------------
+   * Reference: executive cockpit-style bars sit at the bottom of the card
+   * with a tinted background, a coloured fill that uses a soft gradient to
+   * read as "premium", and a subtle right-edge glow so the head of the bar
+   * stays visible on light backgrounds. */
+  /* Sits where the sparkline would, but visually fills based on the metric
+   * value so flat / single-point data still reads as a meaningful progress
+   * indicator instead of a stray horizontal line. */
+
+  .dark .sec-kpi-card__progress {
+    background: color-mix(in oklab, var(--foreground) 14%, transparent);
+    box-shadow: inset 0 1px 2px oklch(0 0 0 / 0.4);
+  }
+  .dark .sec-kpi-card__progress-fill {
+    background: linear-gradient(90deg, color-mix(in oklab, #818cf8 55%, transparent) 0%, #818cf8 100%);
+  }
+  .dark .sec-kpi-card--success .sec-kpi-card__progress-fill {
+    background: linear-gradient(90deg, color-mix(in oklab, #10b981 55%, transparent) 0%, #10b981 100%);
+  }
+  .dark .sec-kpi-card--warning .sec-kpi-card__progress-fill {
+    background: linear-gradient(90deg, color-mix(in oklab, #f59e0b 55%, transparent) 0%, #f59e0b 100%);
+  }
+  .dark .sec-kpi-card--danger .sec-kpi-card__progress-fill {
+    background: linear-gradient(90deg, color-mix(in oklab, #ef4444 55%, transparent) 0%, #ef4444 100%);
+  }
+  .dark .sec-kpi-card--info .sec-kpi-card__progress-fill {
+    background: linear-gradient(90deg, color-mix(in oklab, #38bdf8 55%, transparent) 0%, #38bdf8 100%);
+  }
+  .dark .sec-kpi-card--neutral .sec-kpi-card__progress-fill {
+    background: linear-gradient(90deg, color-mix(in oklab, #818cf8 55%, transparent) 0%, #818cf8 100%);
+  }
+
+  .dark .sec-kpi-card--success .sec-kpi-card__value { color: #34d399; }
+  .dark .sec-kpi-card--warning .sec-kpi-card__value { color: #fbbf24; }
+  .dark .sec-kpi-card--danger .sec-kpi-card__value { color: #f87171; }
+  .dark .sec-kpi-card--info .sec-kpi-card__value { color: #38bdf8; }
+
+  /* Pillar grid uses flexbox + ``flex: 1 1 220px`` for the same reason as the
+   * KPI ribbon: variable pillar counts (3 for manager execution, 4 for some
+   * admin layouts, 5 for manager team / agent personal) must always fill the
+   * row width without leaving stranded empty tracks. */
+
+  .dark .sec-cockpit .sec-pillar-card,
+  .dark .sec-cockpit .admin-cockpit-pillar-link.sec-pillar-card {
+    border-color: color-mix(in oklab, var(--foreground) 14%, transparent);
+    border-top: 3px solid var(--pillar-accent);
+    background:
+      linear-gradient(180deg, color-mix(in oklab, var(--card) 88%, var(--pillar-accent) 12%) 0%, var(--card) 100%);
+    box-shadow:
+      0 1px 0 color-mix(in oklab, var(--foreground) 6%, transparent) inset,
+      0 1px 2px oklch(0 0 0 / 0.35);
+  }
+
+  .dark .agent-performance-cockpit-page.sec-cockpit .sec-pillar-card,
+  .dark .agent-performance-cockpit-page.sec-cockpit .admin-cockpit-pillar-link.sec-pillar-card {
+    border: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+    border-top: 2px solid var(--pillar-accent, var(--primary));
+    background: var(--card);
+    box-shadow: 0 1px 2px oklch(0 0 0 / 0.25);
+  }
+
+  .dark .agent-performance-cockpit-page.sec-cockpit .sec-pillar-card:hover,
+  .dark .agent-performance-cockpit-page.sec-cockpit .admin-cockpit-pillar-link.sec-pillar-card:hover {
+    border-top-color: var(--pillar-accent, var(--primary));
+    border-right-color: color-mix(in oklab, var(--border) 82%, transparent);
+    border-bottom-color: color-mix(in oklab, var(--border) 82%, transparent);
+    border-left-color: color-mix(in oklab, var(--border) 82%, transparent);
+    box-shadow: 0 8px 22px oklch(0 0 0 / 0.35);
+  }
+
+  /* The ``::before`` strip is no longer needed (its job is done by the actual
+   * border-top above), but if any legacy CSS path still draws it we hide it
+   * explicitly so we never get a doubled accent. */
+
+  .dark .sec-cockpit .admin-cockpit-pillar-link.sec-pillar-card:hover {
+    box-shadow:
+      0 1px 0 color-mix(in oklab, var(--foreground) 6%, transparent) inset,
+      0 8px 22px color-mix(in oklab, var(--pillar-accent) 22%, transparent);
+  }
+
+  /* Cockpit context — the kicker IS the pillar title (no separate heading),
+   * so promote it to a proper title weight + size and drop the all-caps so
+   * it reads naturally (matches the executive cockpit reference's
+   * "Customer Experience" / "Digital Transformation" titles). */
+  .dark .sec-cockpit .admin-cockpit-pillar-kicker {
+    color: var(--foreground);
+  }
+
+  /* Reference uses small filled circles for the legend bullets; we mirror
+   * the executive cockpit style with a small drop-shadow glow so each colour
+   * "pops" even in dense legend layouts. */
+
+  /* Centred initials badge — explicit flex centring so the letters always
+   * sit dead-centre instead of hugging the top-left corner of the 22×22 box. */
+  .dark .sec-pillar-footer__avatar {
+    background: color-mix(in oklab, var(--pillar-accent, var(--primary)) 22%, var(--card));
+    color: color-mix(in oklab, var(--pillar-accent, var(--primary)) 50%, var(--foreground));
+    border-color: color-mix(in oklab, var(--pillar-accent, var(--primary)) 32%, transparent);
+  }
+
+  /* The "Scope / Team name" pair must stack vertically — without
+   * ``flex-direction: column`` the span+strong run inline (e.g.
+   * ``ScopeOrganization``). */
+
+  /* Legacy sec-pillar-card fallback (non-cockpit contexts) */
+
+  .dark .sec-pillar-trend--up {
+    background: oklch(0.65 0.2 155 / 0.2);
+    color: #34d399;
+  }
+
+  .dark .sec-pillar-trend--down {
+    background: oklch(0.75 0.15 75 / 0.22);
+    color: #fbbf24;
+  }
+
+  /* ── Pipeline movement: Top contributing teams ── */
+
+  .dark .sec-pipeline-teams-item {
+    background: color-mix(in oklab, var(--card) 88%, var(--foreground) 12%);
+    border-color: color-mix(in oklab, var(--foreground) 12%, transparent);
+  }
+
+  .dark .sec-pipeline-teams-item__avatar {
+    color: #a5b4fc;
+    background: color-mix(in oklab, #6366f1 20%, transparent);
+    border-color: color-mix(in oklab, #6366f1 28%, transparent);
+  }
+
+  /* Legacy aliases — keep if referenced elsewhere */
+
+  /* ── Pipeline movement: stage breakdown (fills lower whitespace) ── */
+
+  @keyframes secPipelineStageReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ── Weekly comparison: W-o-W delta block + peak day callout ── */
+
+  .dark .sec-compare-delta__row {
+    background: color-mix(in oklab, var(--foreground) 7%, transparent);
+  }
+
+  .dark .sec-compare-delta__chip--up {
+    background: oklch(0.65 0.2 155 / 0.22);
+    color: #34d399;
+  }
+
+  .dark .sec-compare-delta__chip--down {
+    background: oklch(0.75 0.15 75 / 0.24);
+    color: #fbbf24;
+  }
+
+  .dark .sec-compare-peak {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklab, #6366f1 22%, transparent),
+      color-mix(in oklab, #22c55e 18%, transparent)
+    );
+    border-color: color-mix(in oklab, var(--foreground) 14%, transparent);
+  }
+
+  .dark .sec-compare-peak svg {
+    color: #a5b4fc;
+  }
+
+  /* Subtitle text under panel titles */
+
+  .dark .sec-status-pill--success {
+    background: color-mix(in oklab, #10b981 24%, var(--card));
+    color: #6ee7b7;
+    border-color: color-mix(in oklab, #10b981 40%, transparent);
+  }
+
+  .dark .sec-status-pill--warning {
+    background: color-mix(in oklab, #f59e0b 24%, var(--card));
+    color: #fcd34d;
+    border-color: color-mix(in oklab, #f59e0b 40%, transparent);
+  }
+
+  .dark .sec-status-pill--muted {
+    background: color-mix(in oklab, var(--foreground) 12%, var(--card));
+  }
+
+  .dark .sec-status-pill--neutral {
+    background: color-mix(in oklab, #0ea5e9 24%, var(--card));
+    color: #7dd3fc;
+    border-color: color-mix(in oklab, #0ea5e9 40%, transparent);
+  }
+
+  .dark .sec-insights-chart-panel {
+    background: color-mix(in oklab, var(--card) 70%, transparent);
+    border-color: color-mix(in oklab, var(--foreground) 12%, transparent);
+  }
+
+  .dark .exec-cockpit-deferred-skeleton__bar {
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--foreground) 10%, var(--card)) 25%,
+      color-mix(in oklab, var(--foreground) 5%, var(--card)) 50%,
+      color-mix(in oklab, var(--foreground) 10%, var(--card)) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  .dark .exec-cockpit-deferred-skeleton__grid > span {
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--foreground) 10%, var(--card)) 25%,
+      color-mix(in oklab, var(--foreground) 5%, var(--card)) 50%,
+      color-mix(in oklab, var(--foreground) 10%, var(--card)) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  @keyframes exec-cockpit-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .dark .exec-mini-stat-card {
+    background: color-mix(in oklab, var(--card) 75%, transparent);
+    border-color: color-mix(in oklab, var(--foreground) 14%, transparent);
+  }
+
+  .dark .cockpit-distribution-strip__item {
+    background: color-mix(in oklab, var(--card) 72%, transparent);
+    border-color: color-mix(in oklab, var(--foreground) 14%, transparent);
+  }
+
+  .dark .admin-cockpit-status-pill.status-good {
+    color: #6ee7b7;
+    background: oklch(0.65 0.2 155 / 0.18);
+    border-color: oklch(0.65 0.2 155 / 0.32);
+  }
+
+  .dark .admin-cockpit-status-pill.status-mid {
+    color: #fcd34d;
+    background: oklch(0.75 0.15 85 / 0.18);
+    border-color: oklch(0.75 0.15 85 / 0.32);
+  }
+
+  .dark .admin-cockpit-status-pill.status-low {
+    color: #fca5a5;
+    background: oklch(0.62 0.22 25 / 0.16);
+    border-color: oklch(0.62 0.22 25 / 0.3);
+  }
+
+}
