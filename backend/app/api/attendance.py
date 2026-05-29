@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field, ValidationError
 from app.api.deps import _access_token, get_current_admin, get_current_agent, get_current_manager, get_db
 from app.core.constants import ROLE_AGENT, ROLE_MANAGER
 from app.core.jwt import decode_access_token
-from app.extensions.lifespan import ensure_db_ready, run_pending_migrations
+from app.extensions.lifespan import ensure_db_ready
 from app.models.attendance import (
     EVENT_ACTIVE,
     EVENT_HEARTBEAT,
@@ -31,13 +31,6 @@ from app.utils.account_ref import format_account_ref, parse_account_ref
 attendance_bp = Blueprint("attendance", __name__, url_prefix="/api")
 
 PRESENCE_EVENTS = {EVENT_HEARTBEAT, EVENT_IDLE_START, EVENT_IDLE_END, EVENT_ACTIVE}
-
-
-@attendance_bp.before_request
-def _attendance_migrations():
-    ready, _ = ensure_db_ready()
-    if ready:
-        run_pending_migrations()
 
 
 class PresenceRequest(BaseModel):

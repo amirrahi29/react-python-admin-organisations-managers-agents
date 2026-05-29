@@ -1,4 +1,4 @@
-from sqlalchemy import func
+from sqlalchemy import exists, func, or_, select
 from sqlalchemy.orm import Session
 
 from app.core.security import hash_password
@@ -157,12 +157,10 @@ def resolve_organization_id_for_admin(
 
 def is_organization_email_in_use(db: Session, email: str) -> bool:
     normalized = email.lower().strip()
-    if db.query(Admin).filter(Admin.email == normalized).first():
-        return True
-    if db.query(Organization).filter(Organization.email == normalized).first():
-        return True
-    if db.query(Manager).filter(Manager.email == normalized).first():
-        return True
-    if db.query(Agent).filter(Agent.email == normalized).first():
-        return True
-    return False
+    taken = or_(
+        exists(select(Admin.id).where(Admin.email == normalized)),
+        exists(select(Organization.id).where(Organization.email == normalized)),
+        exists(select(Manager.id).where(Manager.email == normalized)),
+        exists(select(Agent.id).where(Agent.email == normalized)),
+    )
+    return bool(db.scalar(select(taken)))

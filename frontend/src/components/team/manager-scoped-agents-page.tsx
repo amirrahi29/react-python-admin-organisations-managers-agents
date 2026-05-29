@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Alert } from "@/components/ui/alert";
 import { FadeIn, PageEnter } from "@/components/ui/motion";
-import { TeamManagementPage } from "@/components/team/team-management-page";
+import { TeamManagementPage } from "@/lib/lazy/dashboard-pages";
 import { AuthError } from "@/lib/auth/constants";
 import { getManager } from "@/lib/team/client";
 import { ADMIN_MANAGERS_PATH, type TeamMember } from "@/lib/team/constants";

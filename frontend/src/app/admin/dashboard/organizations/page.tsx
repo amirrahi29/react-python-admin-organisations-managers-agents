@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { OrganizationsManagementPage } from "@/components/organizations/organizations-management-page";
+import { OrganizationsManagementPage } from "@/lib/lazy/dashboard-pages";
 
 export const metadata: Metadata = {
   title: "Organizations",

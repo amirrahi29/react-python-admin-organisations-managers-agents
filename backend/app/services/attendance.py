@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import UTC, date, datetime, timedelta
 from typing import Any
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.models.agent import Agent
@@ -86,20 +86,18 @@ def close_stale_sessions(
     user_type: str | None = None,
     user_id: int | None = None,
 ) -> int:
-    query = select(AttendanceSession).where(AttendanceSession.logout_at.is_(None))
+    now = _utcnow()
+    cutoff = now - timedelta(seconds=STALE_SESSION_SECONDS)
+    query = select(AttendanceSession).where(
+        AttendanceSession.logout_at.is_(None),
+        func.coalesce(AttendanceSession.last_seen_at, AttendanceSession.login_at) < cutoff,
+    )
     if user_type is not None:
         query = query.where(AttendanceSession.user_type == user_type)
     if user_id is not None:
         query = query.where(AttendanceSession.user_id == user_id)
 
-    sessions = db.scalars(query).all()
-    stale: list[AttendanceSession] = []
-    now = _utcnow()
-    for session in sessions:
-        last_seen = session.last_seen_at or session.login_at
-        if (now - last_seen).total_seconds() > STALE_SESSION_SECONDS:
-            stale.append(session)
-
+    stale = db.scalars(query).all()
     if not stale:
         return 0
 

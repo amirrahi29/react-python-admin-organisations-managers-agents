@@ -383,6 +383,28 @@ def _migrate_organization_tables() -> None:
         )
 
 
+def _migrate_performance_indexes() -> None:
+    """Composite and partial indexes for list, dashboard, attendance, and leave queries."""
+    statements = (
+        "CREATE INDEX IF NOT EXISTS ix_organization_admin_active ON organization (admin_id, is_active)",
+        "CREATE INDEX IF NOT EXISTS ix_manager_org_active ON manager (organization_id, is_active)",
+        "CREATE INDEX IF NOT EXISTS ix_agent_manager_active ON agent (manager_id, is_active)",
+        "CREATE INDEX IF NOT EXISTS ix_leave_request_requester_status "
+        "ON leave_request (requester_type, requester_id, status)",
+        "CREATE INDEX IF NOT EXISTS ix_leave_request_reviewer_status "
+        "ON leave_request (assigned_reviewer_type, assigned_reviewer_id, status)",
+        "CREATE INDEX IF NOT EXISTS ix_leave_request_status_start "
+        "ON leave_request (status, start_date)",
+        "CREATE INDEX IF NOT EXISTS ix_attendance_session_user_login "
+        "ON attendance_session (user_type, user_id, login_at DESC)",
+        "CREATE INDEX IF NOT EXISTS ix_attendance_session_open "
+        "ON attendance_session (last_seen_at) WHERE logout_at IS NULL",
+    )
+    with engine.begin() as conn:
+        for stmt in statements:
+            conn.execute(text(stmt))
+
+
 _migrations_ready = False
 _schema_initialized = False
 _migration_lock = threading.RLock()
@@ -413,6 +435,7 @@ def run_pending_migrations() -> None:
         _migrate_attendance_tables()
         _migrate_leave_tables()
         _migrate_organization_tables()
+        _migrate_performance_indexes()
         _migrations_ready = True
         print("Database migrations complete.")
 

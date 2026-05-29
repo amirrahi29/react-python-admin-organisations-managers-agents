@@ -853,6 +853,7 @@ def list_all_agent_leaves_for_admin(db: Session, admin_id: int, *, month: str | 
             LeaveRequest.start_date < month_end,
         )
     leaves = db.scalars(query).all()
+    reviewer_map = _bulk_reviewer_map(db, list(leaves))
     rows: list[dict[str, Any]] = []
     for leave in leaves:
         agent = agent_map.get(leave.requester_id)
@@ -865,7 +866,7 @@ def list_all_agent_leaves_for_admin(db: Session, admin_id: int, *, month: str | 
                 requester_email=agent.email,
                 requester_account_id=format_account_ref(role=REQUESTER_AGENT, member_id=agent.id),
                 manager_name=manager_names.get(agent.manager_id),
-                db=db,
+                reviewer_map=reviewer_map,
             )
         )
     return rows

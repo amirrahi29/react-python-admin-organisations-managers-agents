@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field, ValidationError
 from app.api.deps import _access_token, get_current_admin, get_current_agent, get_current_manager, get_db
 from app.core.constants import ROLE_ADMIN, ROLE_AGENT, ROLE_MANAGER
 from app.core.jwt import decode_access_token
-from app.extensions.lifespan import ensure_db_ready, run_pending_migrations
+from app.extensions.lifespan import ensure_db_ready
 from app.models.leave import DURATION_FULL, DURATION_TYPES, LEAVE_TYPES, REQUESTER_AGENT, REQUESTER_MANAGER
 from app.services.leaves import (
     calculate_leave_days,
@@ -29,13 +29,6 @@ from app.services.leaves import (
 )
 
 leaves_bp = Blueprint("leaves", __name__, url_prefix="/api")
-
-
-@leaves_bp.before_request
-def _leaves_migrations():
-    ready, _ = ensure_db_ready()
-    if ready:
-        run_pending_migrations()
 
 
 class LeavePayload(BaseModel):

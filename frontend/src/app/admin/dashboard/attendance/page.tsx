@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AdminAttendanceWorkspace } from "@/components/attendance/admin-attendance-workspace";
+import { AdminAttendanceWorkspace } from "@/lib/lazy/dashboard-pages";
 
 export const metadata: Metadata = {
   title: "Attendance & Leaves",

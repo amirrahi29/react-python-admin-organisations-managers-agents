@@ -1,8 +1,7 @@
-from collections.abc import Generator
 import os
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 from app.core.config import settings
 
@@ -13,10 +12,8 @@ _is_postgres = _db_url.startswith("postgres") or "postgresql" in _db_url
 
 _connect_args: dict = {}
 if _is_postgres:
-    # ``options`` is the canonical way to set a session-wide statement timeout
-    # on psycopg/psycopg2. Cap at 30s so a single runaway query can't choke a
-    # pool slot indefinitely.
     _connect_args["options"] = f"-c statement_timeout={_STATEMENT_TIMEOUT_MS}"
+    _connect_args["connect_timeout"] = int(os.getenv("DB_CONNECT_TIMEOUT", "10"))
 
 engine = create_engine(
     _db_url,
@@ -24,6 +21,8 @@ engine = create_engine(
     pool_size=int(os.getenv("DB_POOL_SIZE", "10")),
     max_overflow=int(os.getenv("DB_MAX_OVERFLOW", "20")),
     pool_recycle=_POOL_RECYCLE_SECONDS,
+    pool_timeout=int(os.getenv("DB_POOL_TIMEOUT", "30")),
+    pool_use_lifo=os.getenv("DB_POOL_LIFO", "1").strip().lower() in {"1", "true", "yes"},
     connect_args=_connect_args,
     future=True,
 )
@@ -32,11 +31,3 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine, expi
 
 class Base(DeclarativeBase):
     pass
-
-
-def get_db() -> Generator[Session, None, None]:
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()

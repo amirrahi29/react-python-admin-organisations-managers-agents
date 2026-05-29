@@ -3,7 +3,7 @@ from __future__ import annotations
 import time
 from threading import Lock
 
-from sqlalchemy import func
+from sqlalchemy import case, func
 from sqlalchemy.orm import Session, joinedload
 
 from app.models.agent import AGENT_ACTIVE, Agent
@@ -14,7 +14,7 @@ from app.utils.account_ref import format_account_ref
 
 _DASHBOARD_STATS_CACHE: dict[tuple[str, int], tuple[float, dict]] = {}
 _DASHBOARD_STATS_CACHE_LOCK = Lock()
-_DASHBOARD_STATS_CACHE_TTL_SECONDS = 15
+_DASHBOARD_STATS_CACHE_TTL_SECONDS = 45
 
 
 def _read_dashboard_stats_cache(scope: str, scope_id: int) -> dict | None:
@@ -44,12 +44,16 @@ def get_admin_dashboard_stats(db: Session, admin_id: int) -> dict:
     org_ids = [org.id for org in organizations]
 
     manager_query = db.query(Manager).filter(Manager.id.in_(admin_manager_ids_subquery(admin_id)))
-    total_managers = manager_query.count()
-    active_managers = manager_query.filter(Manager.is_active == MANAGER_ACTIVE).count()
+    total_managers, active_managers = manager_query.with_entities(
+        func.count(Manager.id),
+        func.coalesce(func.sum(case((Manager.is_active == MANAGER_ACTIVE, 1), else_=0)), 0),
+    ).one()
 
     agent_query = db.query(Agent).filter(Agent.id.in_(admin_agent_ids_subquery(admin_id)))
-    total_agents = agent_query.count()
-    active_agents = agent_query.filter(Agent.is_active == AGENT_ACTIVE).count()
+    total_agents, active_agents = agent_query.with_entities(
+        func.count(Agent.id),
+        func.coalesce(func.sum(case((Agent.is_active == AGENT_ACTIVE, 1), else_=0)), 0),
+    ).one()
 
     manager_counts: dict[int, int] = {}
     if org_ids:
@@ -117,10 +121,10 @@ def get_admin_dashboard_stats(db: Session, admin_id: int) -> dict:
         "summary": {
             "organizations": len(organizations),
             "active_organizations": sum(1 for org in organizations if org.is_active == ORG_ACTIVE),
-            "managers": total_managers,
-            "active_managers": active_managers,
-            "agents": total_agents,
-            "active_agents": active_agents,
+            "managers": int(total_managers),
+            "active_managers": int(active_managers),
+            "agents": int(total_agents),
+            "active_agents": int(active_agents),
         },
         "organization_overview": organization_overview,
         "manager_overview": manager_overview,

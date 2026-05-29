@@ -315,6 +315,42 @@ Use `.env.example` files as templates only — never commit real credentials.
 | `scripts/hash_password.py` | Generate bcrypt hash for manual DB update |
 | `scripts/set_admin_status.py` | Enable/disable admin account |
 | `scripts/check_db.py` | Test database connection |
+| `scripts/create_tables.py` | Bootstrap schema via startup migrations |
+
+---
+
+## Performance & scale
+
+Built-in optimizations in this repo:
+
+- DB connection pooling (pre-ping, LIFO, timeouts, statement limits)
+- Composite indexes for org / manager / agent / leave / attendance queries
+- Dashboard stats cached in-memory (45s per role)
+- Single-query email uniqueness check (no 4 round-trips)
+- Stale attendance cleanup filtered in SQL
+- Gzip/Brotli JSON compression (Flask-Compress)
+- Heavy pages code-split with `next/dynamic` (`src/lib/lazy/dashboard-pages.tsx`)
+- ~570 lines of unused outbound/cockpit CSS removed
+
+For **millions of users**, also plan infrastructure beyond the app:
+
+| Layer | Recommendation |
+|-------|----------------|
+| App servers | Gunicorn with multiple workers behind a load balancer |
+| Database | PostgreSQL with read replicas; tune `DB_POOL_SIZE` per worker |
+| Cache | Redis for sessions, rate limits, and dashboard stats |
+| CDN | Serve Next.js static assets globally |
+| Email | Background queue (Celery/SQS) for notifications |
+
+Production pool tuning example:
+
+```env
+DB_POOL_SIZE=5
+DB_MAX_OVERFLOW=10
+DB_POOL_TIMEOUT=30
+DB_CONNECT_TIMEOUT=10
+FLASK_DEBUG=0
+```
 
 ---
 
